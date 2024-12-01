@@ -143,25 +143,26 @@ Notes:
 
 
 ## 2. Operators
----
 
 ### 2.A. Arithmetic Operators:
-
-+, -, *, /, %, **, //: flore division that does the division and rounds the answer down
-*=, +=, -=, //= etc...
+```python
+    +, -, *, /, %, **, //: # flore division that does the division and rounds the answer down
+    *=, +=, -=, //= etc...
+```
 
 ### 2.B. Comparison Operators
-
+```python
     ==, >, <, >=, <=, !=
+```
 
 ### 2.C. Logical Operators
 
 `and`, `or`,`not`
 
 Note: 
-- "or" can be used in a serie of expressions to return the first none true expression or otherwise return the last expression
+- `or` can be used in a serie of expressions to return the first none true expression or otherwise return the last expression
 - So it can be used for ternary operators. Ex: sold = 0 or 1 #sold  will be 1
-- "and" can also be used in a series of expression to return the first falsy expression otherwise return the last expression
+- `and` can also be used in a series of expression to return the first falsy expression otherwise return the last expression
 - So it can be used for ternary operators. Ex: sold = 0 or 1 #sold  will be 0
         
 ### 2.D. IN and IS Operators
@@ -190,80 +191,86 @@ Ex: name = input("Type your name: ")
 
 ### 4.A. if elif elif else
 ```python
-        if (cond):
-            instructions
-        elid (cond):
-            instructions
-        else:
-            instructions
+if (cond):
+    instructions
+elid (cond):
+    instructions
+else:
+    instructions
 
-        ### 4.B. While
-            while cond:
-                instructions
+### 4.B. While
+    while cond:
+        instructions
 ```
-        ### 4.C. For in loop
+
+### 4.C. For in loop
 
 ```python
-            for item in list:
-                print(item) # instructions
+for item in list:
+    print(item) # instructions
 ```
 ```python
     for item in range(10):
         print(item) # instructions
 ```
-        - range(offset) function returns a list with elements from 0 to offset
+- `range(offset)`: function returns a list with elements from 0 to offset
 ```python
     for (index, item) in enumerate(list):
         print(index, item) # instructions
 ```
-        - enumerate function implemented with for in loop heps extract the index of items in the loop
-        we can use continue nad break statement in python as well
 
+- `enumerate(list)` function implemented with for in loop heps extract the index of items in the loop
+we can use continue nad break statement in python as well
         
-        ## 5. Functions
+## 5. Functions
 ```python
 def fx_name(params="default value"):
-    instructions
+    # instructions
     return expression
 ```
-        In python we can nest functions on inside an other. This is useful we wanna separate a part of code that is useful only to a specific function.
-        But when from a nested function we want to access a var defined in the parent function we need to reference that var inside the nested function using:
-        "nonlocal var_name".
 
-        Since we can define functions in other function we can also return a function from a function. This gives birth to the idea of Clausures.
-        In python, a returned child function can keep track on the variables of the parent funciton even when the parent function is no longer active. This is called Clausures.
+In python we can nest functions on inside an other. This is useful we wanna separate a part of code that is useful only to a specific function.
+But when from a nested function we want to access a var defined in the parent function we need to reference that var inside the nested function using:
+"nonlocal var_name".
 
-        Notes: 
-            - In python, a function can return more than one element. All elements will be returned in a tuple in that case.
+Since we can define functions in other function we can also return a function from a function. This gives birth to the idea of Clausures.
+In python, a returned child function can keep track on the variables of the parent funciton even when the parent function is no longer active. This is called Clausures.
 
-        ### 5.A. Lambda funcitions
+Notes: 
+    - In python, a function can return more than one element. All elements will be returned in a tuple in that case.
 
-        Lambda functions are comparable to Js's arrow function. 
-            - They are sigle line fx
-            - Can receive x params
-            - Always return a value
-            - They can be asigned to a variable to be called later on.
+### 5.A. Lambda functions
 
-        Ex: pow2 = lambda n: n * n
-        pow2(5) returns 25
+Lambda functions are comparable to Js's arrow function. 
+- They are sigle line fx
+- Can receive x params
+- Always return a value
+- They can be asigned to a variable to be called later on.
 
-        ### 5.B. Useful global function
+Ex:
+```python 
+pow2 = lambda n: n * n
+pow2(5) returns 25
+```
 
-        #### 5.B.1 Map(), Filter(), Reduce()
-        - map(fx, list): fx: The func to apply on each item; list the list of items to transform
-        - filter(fx, list): if the item make fx return True, the the item is taken otherwise the item is thrown away
-        - reduce(fx, list): it returns a value calculated by evaluating items of the list. Ex: for findin' the sum of a list elements.
+### 5.B. Useful global function
 
-        ### 5.C. Dcorator Functions
+#### 5.B.1 Map(), Filter(), Reduce()
+- `map(fx, list)`: fx: The func to apply on each item; list the list of items to transform
+- `filter(fx, list)`: if the item make fx return True, the the item is taken otherwise the item is thrown away
+- `reduce(fx, list)`: it returns a value calculated by evaluating items of the list. Ex: for findin' the sum of a list elements.
 
-        Decorator funcitions are functions' that add additional features to a fx
-        They can be used to determined a dynamic part of a function. They recive a function, wrape it into a wrapper and return a new one.
-        They can be used to run the same code on multiple function
+### 5.C. Dcorator Functions
 
-        Note  
-            - reduce is not global, it needs to be imported from the functools lib
-            - It's very comon to use lambda function in map, filter and reduce()
-            - These 3 funct need to be cast with list() to get a list
+Decorator funcitions are functions' that add additional features to a fx
+They can be used to determined a dynamic part of a function. They recive a function, wrape it into a wrapper and return a new one.
+They can be used to run the same code on multiple function
+
+Note  
+- reduce is not global, it needs to be imported from the functools lib
+- It's very comon to use lambda function in map, filter and reduce()
+- These 3 funct need to be cast with list() to get a list
+
 ```python
 # the decorator fx
 def decorator_fx(fx):
@@ -287,15 +294,11 @@ hello()
 List comprehension is a smarter way of mapping or going through a list.
 Syntax: `new_list = [operation_to_apply_on_each_ele for var_used_in_the_operation in old_list]`
 
-Example:
-
-
 ## 6. Classes
----------
 
 Names of classes start with capital letter. 
 Every function defined in a class to be used as method should have "self" as first argument. "self" keyword points to the current object of the class.
-__init__ is the constructor method of a class
+`__init__` is the constructor method of a class
 
 ```python
 class Person:
@@ -334,10 +337,10 @@ class Animal(Being):
 
     def bark(self):
         print("Barking...")
-```
 
 class MyChildClass(MyParentClass):
-    instructions
+    # instructions
+```
 
 ### 6.B. Operation Overloading
 
@@ -376,11 +379,11 @@ from file_1 import func
 func()
 ```
 Notes:
-    - When we put our .py files in a sub folder, to import the as module we need to add a empty file named `__init__.py.`
-    This will tell python that our subfolder contains py modules.
-    - Python has many buit in libs for extra functionalities: 
-    - fuctools: a lib that provide useful functions like reduce()
-    math, statitistics, random, http, requests, html, sqlite3, re (regex), json, datetime, os (operating system), urllib
+- When we put our .py files in a sub folder, to import the as module we need to add a empty file named `__init__.py.`
+This will tell python that our subfolder contains py modules.
+- Python has many buit in libs for extra functionalities: 
+- fuctools: a lib that provide useful functions like reduce()
+math, statitistics, random, http, requests, html, sqlite3, re (regex), json, datetime, os (operating system), urllib
 
 ## 8. Command line arguments
 
@@ -419,7 +422,7 @@ finally:
 ```
 
 We throw an error using:
-    raise Exception("message)
+    raise `Exception("message)`
 ```python
 try:
     raise Exception("message")
