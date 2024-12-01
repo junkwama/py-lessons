@@ -11,7 +11,7 @@ They can also be used for casting (converting) variable types. Ex: `age = "12"; 
 
 Notes:
 - The global function `type(var)`: returns the type of the variable it receives as a parameter.
-- We can also use the `isinstance(var, type)` function to check if a variable is an instance of a type class "type".
+- We can also use the `isinstance(var, type)` function to check if a variable is an instance of a type class `type`.
 
 ### 1.A STRING
 
@@ -42,152 +42,153 @@ We can also use the `in` operator instead of the `.find()` method. Ex: `"JU" in 
 To get a substring from a string we can also use brackets. Ex: `sentence = "my son is coming". sentence[3:6]` returns "son".
 
 ### 1.B COMPLEX NUMBERS
-    ### 1.B COMPLEX NUMBERS
 
-        num1 = 1+2j
-        num2 = complex(1,2)
+num1 = 1+2j
+num2 = complex(1,2)
 
-        print(num1.real) # prints 1.0 as the real num part
-        print(num1.imag) # prints 2.0 as the imaginary parts 
+`print(num1.real)` -> prints 1.0 as the real num part
+`print(num1.imag)` -> prints 2.0 as the imaginary parts 
 
-    NOTE: Both the real and imag parts are handled as floats
+NOTE: Both the real and imag parts are handled as floats
 
-    Global functions to work with numbers:
-        - abs(num): return the absolute value of a num. Ex abs(-3.5) returns 3.5
-        - round(5.5, decimal precision): return 6
+#### Global functions to work with numbers:
+    `- abs(num)`: return the absolute value of a num. Ex abs(-3.5) returns 3.5
+    `- round(5.5, decimal precision)`: return 6
 
-    ### 1.C ENUMS
+### 1.C ENUMS
 
-    Enums are readable names bound to constant values. It is the only way to create constants in python.
-    To use enums we need to import the Enum class from the enum module: from enum import Enum
+Enums are readable names bound to constant values. It is the only way to create constants in python.
+To use enums we need to import the Enum class from the enum module: from enum import Enum
 
-    class NameToGiveToTheEnum(Enum):
-        CONST_NAME1 = val1
-        CONST_NAME2 = val2
-        CONST_NAME3 = val3
-        ... etc 
+```python
+class NameToGiveToTheEnum(Enum):
+    CONST_NAME1 = val1
+    CONST_NAME2 = val2
+    CONST_NAME3 = val3
+```
 
-    To get the value: 
-        - NameToGiveToTheEnum.CONST_NAME.value
-        - NameToGiveToTheEnum["CONST_NAME"].value
-    To get the const name:
-        - NameToGiveToTheEnum(val)
-        - NameToGiveToTheEnum["CONST_NAME"]
+To get the value: 
+    - NameToGiveToTheEnum.CONST_NAME.value
+    - NameToGiveToTheEnum["CONST_NAME"].value
+To get the const name:
+    - NameToGiveToTheEnum(val)
+    - NameToGiveToTheEnum["CONST_NAME"]
 
     The list(NameToGiveToTheEnum): global function lists all the values of the Enum
     len(NameToGiveToTheEnum): to count the number of constants it has
 
-    ### 1.D LISTS
+### 1.D LISTS
 
-    - We can use [x:y]: to get a range of items from a list. Ex [:4] from index 0 to 4 (excluded); [3:6] from 3 (included) to 6 (excluded)
-    - Methods of list modify the existing array
+- We can use [x:y]: to get a range of items from a list. Ex [:4] from index 0 to 4 (excluded); [3:6] from 3 (included) to 6 (excluded)
+- Methods of list modify the existing array
         
-    Methods:
-        - list.append(ele) to add ele to the end of the list
-        - list.insert(index, val): To add an element in the middle of a list
-        - list1.extend([list2]) merges list1 with list2. It is also a way to add elements to a list
-        - Instead of extend we can also use the += operator
-        - We can add many elements in the middle of a list by using range operator: list[3:3] = [4, "Uot", 6]
-        - list.remove(eleValue): find the ele and removes it. Breaks the code if the ele is not found
-        - list.pop(): remove and returns the last ele
-        - reverse, sort, copy ..etc
+#### Methods:
 
-    The global function sorted(list, key=str.lower) returns the sorted list without modifying it, so it does it by copying the original. key=str.lower for case insensitiveness
+- `list.append(ele)` to add ele to the end of the list
+- `list.insert(index, val)`: To add an element in the middle of a list
+- `list1.extend([list2])` merges list1 with list2. It is also a way to add elements to a list
+- Instead of extend we can also use the += operator
+- We can add many elements in the middle of a list by using range operator: `list[3:3] = [4, "Uot", 6]`
+- `list.remove(eleValue)`: find the ele and removes it. Breaks the code if the ele is not found
+- `list.pop()`: remove and returns the last ele
+- `reverse`, `sort`, `copy` ..etc
+
+The global function sorted(list, key=str.lower) returns the sorted list without modifying it, so it does it by copying the original. key=str.lower for case insensitiveness
 
     ## 1.F. Tuples
 
-    Ex: tuple = (ele1, ele2, ele3,...)
+Ex: tuple = (ele1, ele2, ele3,...)
 
-    Tuples look like list but they are created with parentheses. 
-    Tuple are immutable. The can't be modified.
-    The accep most of the lists' function: len, sorted
+Tuples look like list but they are created with parentheses. 
+Tuple are immutable. The can't be modified.
+The accep most of the lists' function: len, sorted
+
 ```python
-    tuple[1] # ele2
-    tuple.index(ele2) # 1
-    newTuple = tuple + (1, 3, 4)
+tuple[1] # ele2
+tuple.index(ele2) # 1
+newTuple = tuple + (1, 3, 4)
 ```
 
-    ## 1.G. Dictionaries
+## 1.G. Dictionaries
 ```python
-    person = {
-        "name" : "Judy",
-        "height": 1.9
-        "black_eyes": true    
-    }
+person = {
+    "name" : "Judy",
+    "height": 1.9
+    "black_eyes": true    
+}
 ```
     person["key"] to access a prop of a Dict (read and write)
     person.get("key", "alternativvalue) (read only)ts and wanna modify it
 
     To add a new key, you do as if it exis
 
-    Built in methodes:
-        - .pop("key_to_remove")
-        - .popitem(): to remove the last inserted element
-        - .items(): returns a list of tuples with 2 element each: the first of is the key and second one value
-        - .keys(), .values()
-        - "in" operator can be used to check in a key exists in a dict 
-        - del dict["key"] to delete a key
+#### Built in methodes:
+- `.pop("key_to_remove")`
+- `.popitem()`: to remove the last inserted element
+- `.items()`: returns a list of tuples with 2 element each: the first of is the key and second one value
+- `.keys()`, `.values()`
+- `in` operator can be used to check in a key exists in a dict 
+- `del dict["key"]` to delete a key
 
-    ## 1.H. Sets
+## 1.H. Sets
 
-    myset = { 1, 3, 4, "roger" }
+myset = { 1, 3, 4, "roger" }
 
-    So they are kind of list but created with curly braces
+So they are kind of list but created with curly braces
 
-    Sets are mathematical sets. With all the operations we can perform on mathematical sets.
-    Notes:
-        - In a set we can't have the same element twice. 
+Sets are mathematical sets. With all the operations we can perform on mathematical sets.
+Notes:
+     - In a set we can't have the same element twice. 
 
 
 
-    ## 2. Operators
-    -------------
+## 2. Operators
+---
 
-    ### 2.A. Arithmetic Operators:
+### 2.A. Arithmetic Operators:
 
-    +, -, *, /, %, **, //: flore division that does the division and rounds the answer down
-    *=, +=, -=, //= etc...
++, -, *, /, %, **, //: flore division that does the division and rounds the answer down
+*=, +=, -=, //= etc...
 
-    ### 2.B. Comparison Operators
+### 2.B. Comparison Operators
 
     ==, >, <, >=, <=, !=
 
-    ### 2.C. Logical Operators
+### 2.C. Logical Operators
 
-    and, or, not
+`and`, `or`,`not`
 
-    Note: 
-        - "or" can be used in a serie of expressions to return the first none true expression or otherwise return the last expression
-        - So it can be used for ternary operators. Ex: sold = 0 or 1 #sold  will be 1
-        - "and" can also be used in a series of expression to return the first falsy expression otherwise return the last expression
-        - So it can be used for ternary operators. Ex: sold = 0 or 1 #sold  will be 0
+Note: 
+- "or" can be used in a serie of expressions to return the first none true expression or otherwise return the last expression
+- So it can be used for ternary operators. Ex: sold = 0 or 1 #sold  will be 1
+- "and" can also be used in a series of expression to return the first falsy expression otherwise return the last expression
+- So it can be used for ternary operators. Ex: sold = 0 or 1 #sold  will be 0
         
-    ### 2.D. IN and IS Operators
+### 2.D. IN and IS Operators
 
-    in: is used to check if a value is contained in a list or in a sequence
-    is: is used to check if two object represent the same object
+`in`: is used to check if a value is contained in a list or in a sequence
+`is`: is used to check if two object represent the same object
 
-    ### 2.E. Ternary Operator
+### 2.E. Ternary Operator
 
-    In python the ternary operator is implemented with if else alined on the same line:
-        var = ValForTrue if condition else ValForFalse
-        Ex: state = "adult" if age >= 18 else "underaged"
+In python the ternary operator is implemented with if else alined on the same line:
+    var = ValForTrue if condition else ValForFalse
+    Ex: state = "adult" if age >= 18 else "underaged"
 
-    ### 2.F any and all global function.
+### 2.F any and all global function.
+They are both used with list or sequences.
+- any[ele1, ele2,...] return true is even one of the elements of the sequence is true
+- all[ele1, ele2,...] return true only if all the elements of the sequence are true
 
-    They are both used with list or sequences.
-        - any[ele1, ele2,...] return true is even one of the elements of the sequence is true
-        - all[ele1, ele2,...] return true only if all the elements of the sequence are true
 
+## 3. User Inputs
 
-        ## 3. User Inputs
+We use the input("text") global function to receive input from user.
+Ex: name = input("Type your name: ")
 
-        We use the input("text") global function to receive input from user.
-        Ex: name = input("Type your name: ")
+## 4. Control Statements
 
-        ## 4. Control Statements
-
-        ### 4.A. if elif elif else
+### 4.A. if elif elif else
 ```python
         if (cond):
             instructions
@@ -207,22 +208,23 @@ To get a substring from a string we can also use brackets. Ex: `sentence = "my s
                 print(item) # instructions
 ```
 ```python
-            for item in range(10):
-                print(item) # instructions
+    for item in range(10):
+        print(item) # instructions
 ```
         - range(offset) function returns a list with elements from 0 to offset
 ```python
-            for (index, item) in enumerate(list):
-                print(index, item) # instructions
+    for (index, item) in enumerate(list):
+        print(index, item) # instructions
 ```
         - enumerate function implemented with for in loop heps extract the index of items in the loop
         we can use continue nad break statement in python as well
 
+        
         ## 5. Functions
 ```python
-        def fx_name(params="default value"):
-            instructions
-            return expression
+def fx_name(params="default value"):
+    instructions
+    return expression
 ```
         In python we can nest functions on inside an other. This is useful we wanna separate a part of code that is useful only to a specific function.
         But when from a nested function we want to access a var defined in the parent function we need to reference that var inside the nested function using:
@@ -263,22 +265,21 @@ To get a substring from a string we can also use brackets. Ex: `sentence = "my s
             - It's very comon to use lambda function in map, filter and reduce()
             - These 3 funct need to be cast with list() to get a list
 ```python
-        # the decorator fx
-        def decorator_fx(fx):
-            def wrapper():
-                name = fx()
-                print(f"Hello {name}")
-            return wrapper
+# the decorator fx
+def decorator_fx(fx):
+    def wrapper():
+        name = fx()
+        print(f"Hello {name}")
+    return wrapper
 
+# Passing to the decorator function a fx as param:
+@decfx
+def hello():
+    name = input("Enter your name :")
+    return name
 
-        # Passing to the decorator function a fx as param:
-        @decfx
-        def hello():
-            name = input("Enter your name :")
-            return name
-
-        # Calling the wrapped fx
-        hello()
+# Calling the wrapped fx
+hello()
 ```
 
 ### 5.D. List Comprehensions
@@ -304,8 +305,6 @@ class Person:
     
     def introduce(self):
         print(f"Hi! my name is {self.name}. I am a {'man' if self.sex == 'm' else 'woman'}")
-
-
 judy = Person("Judy", "m")
 judy.introduce()
 ```
@@ -344,18 +343,18 @@ class MyChildClass(MyParentClass):
 
 In Python, we can define what happens when two objects are *, -, / or compared, etc., using operator overloading special functions inside the class definition of the objects.
 
-__gt__(self, other):
+`__gt__(self, other):`
     return True if self.xprop > other.xprop else False
-__add__(self, other):
+`__add__(self, other):`
     self.sold += other.sold 
 
-__lt__: less than
-__sub__: -
-__mul__: *
-__truediv__: /
-__floordiv__: //
-__mod__: %
-__pow__: **
+`__lt__`: less than
+`__sub__`: -
+`__mul__`: *
+`__truediv__`: /
+`__floordiv__`: //
+`__mod__`: %
+`__pow__`: **
 
 
 ## 7. Modules
@@ -363,19 +362,21 @@ __pow__: **
 In python every file is a module and everything inside it (function, class, vars) are exported automatically.
 So we just need to import a file using it name to access everything inside it.
 
-# in file_2
+__**In file_2**__
+```python
 import file_1
-
 file_1.func()
+```
 
 We can also import one specific function or anything instead of importing the whole file
 
-# in file_2
+__**In file_2**__
+```python
 from file_1 import func
 func()
-
+```
 Notes:
-    - When we put our .py files in a sub folder, to import the as module we need to add a empty file named __init__.py.
+    - When we put our .py files in a sub folder, to import the as module we need to add a empty file named `__init__.py.`
     This will tell python that our subfolder contains py modules.
     - Python has many buit in libs for extra functionalities: 
     - fuctools: a lib that provide useful functions like reduce()
@@ -394,7 +395,8 @@ print sys.argv # list of received arguments with the first one automatically "~p
 ### 9.B. Annotation
 A way to inforce functions or bound variables a pecific type
 
-Ex: 
+Ex:
+
 ```python
 my_var: int = 3; def my_func() -> int: 
 ```
@@ -420,7 +422,7 @@ We throw an error using:
     raise Exception("message)
 ```python
 try:
-    raise Exception("message)
+    raise Exception("message")
 except Exception as error:
     print(error)
 ```
@@ -429,8 +431,9 @@ except Exception as error:
 
 very useful can for exemple allow to open a file with carring about closing it
 
-Ex: 
-    ```python
-    with file_content = open("path", "r")
-    print(file_content)
-    ```
+Ex:
+
+```python
+with file_content = open("path", "r")
+print(file_content)
+```
