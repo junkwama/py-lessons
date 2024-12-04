@@ -33,7 +33,7 @@ class UpdateBaseOffer(BaseModel):
     type: Optional[OfferType] = None
     title: Optional[str] = Field(None, max_length=1024)
     agency_id: Optional[int] = Field(None, gt=0)    
-        
+
 class Offer(BaseOffer):
     id: int = Field(..., gt=0)
     apl_nbr: int = Field(0, ge=0)
@@ -45,9 +45,14 @@ class Offer(BaseOffer):
             for key, val in items:
                 if val:
                     setattr(ofr, key, val)
+    
+    def delete(self):
+        global offers # To avoid confusion with the local var offers
+        offers = list(filter(lambda ofr: ofr.id != self.id, offers))
 
 # We convert the existing offers from dictionaris to the Offer format we prepare with the Offer Modal above
 offers = [Offer(**ofr_dict) for ofr_dict in initial_offers]
+ 
 
 @app.get("/")
 def get_index():
@@ -89,8 +94,8 @@ def get_offer(*, id: int = Path(..., gt=0)) -> Offer:
 @app.post("/offers")
 def post_offers(b_ofr: BaseOffer) -> Offer:
     
-    # Check if the agency_id corriponds to an existing agency
-    if not any(agc["id"] == v for agc in available_agencies):
+    # Check if the agency_id corrisponds to an existing agency
+    if not any(agc["id"] == b_ofr.agency_id for agc in available_agencies):
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Inexisting agency")
     
     # Creating a proper id to the new offer item
@@ -105,11 +110,20 @@ def post_offers(b_ofr: BaseOffer) -> Offer:
     
     return ofr # return the offer with the right id to the user
 
-@app.put("/offer/{id}")
+@app.put("/offers/{id}")
 def put_offer(*, id: int = Path(..., gt=0), updated_ofr: UpdateBaseOffer):
     ofr = get_offer_from_list(id)
     if ofr:
         ofr.update(updated_ofr)
+        return ofr
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Inexisting offers")
+
+@app.delete("/offers/{id}")
+def delete_offer(*, id: int = Path(..., gt=0)) -> Offer:
+    ofr = get_offer_from_list(id)
+    if ofr:
+        ofr.delete()
         return ofr
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Inexisting offers")
