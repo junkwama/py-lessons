@@ -52,7 +52,6 @@ class Offer(BaseOffer):
 
 # We convert the existing offers from dictionaris to the Offer format we prepare with the Offer Modal above
 offers = [Offer(**ofr_dict) for ofr_dict in initial_offers]
- 
 
 @app.get("/")
 def get_index():
