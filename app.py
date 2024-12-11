@@ -1,8 +1,12 @@
-from fastapi import FastAPI, Path, HTTPException, status
+from fastapi import FastAPI, Path, HTTPException, Depends, status
 from typing import Optional
 from pydantic import BaseModel, Field, validator
 from enum import Enum
 from functools import reduce
+
+from config.db import get_db
+from utilities.serializer import serialize_offer
+
 
 app = FastAPI()
 
@@ -17,7 +21,6 @@ def get_offer_from_list(id):
     return list(filter(lambda _ofr: _ofr.id == id, offers))[0] if offers else null
 
 ###
-
 
 class OfferType(Enum):
     study = "études"
@@ -56,6 +59,12 @@ offers = [Offer(**ofr_dict) for ofr_dict in initial_offers]
 @app.get("/")
 def get_index():
     return [{"data": "Helooo from fast-api"}]
+
+@app.get("/db/offers")
+async def get_db_offers(db = Depends(get_db)):
+    ofrs_col = db.offers
+    ofrs = await ofrs_col.find().to_list()
+    return [serialize_offer(ofr) for ofr in ofrs]
 
 @app.get("/offers")
 def get_offers(type: Optional[OfferType] = None, min_apl_nbr: Optional[int] = None, order_by: Optional[str] = None, limit: Optional[int] = None):
