@@ -1,14 +1,14 @@
-from fastapi import FastAPI, Path, HTTPException, Depends, status
+from fastapi import APIRouter, Path, HTTPException, Depends, status
 from typing import Optional
 from pydantic import BaseModel, Field, validator
 from enum import Enum
 from functools import reduce
 
 from config.db import get_db
-from utilities.serializer import serialize_offer
+from routers.offers.offers_utils import serialize_offer
 
 
-app = FastAPI()
+offers_router = APIRouter()
 
 ###
 
@@ -56,15 +56,15 @@ class Offer(BaseOffer):
 # We convert the existing offers from dictionaris to the Offer format we prepare with the Offer Modal above
 offers = [Offer(**ofr_dict) for ofr_dict in initial_offers]
 
-@app.get("/")
-def get_index():
-    return [{"data": "Helooo from fast-api"}]
 
-@app.get("/db/offers")
-async def get_db_offers(db = Depends(get_db)):
-    ofrs_col = db.offers
-    ofrs = await ofrs_col.find().to_list()
-    return [serialize_offer(ofr) for ofr in ofrs]
+@offers_router.get("")
+async def get_offers(db = Depends(get_db)):
+    offers_col = db.offers
+    offers = await offers_col.find().to_list()
+    return [serialize_offer(ofr) for ofr in offers]
+
+
+"""
 
 @app.get("/offers")
 def get_offers(type: Optional[OfferType] = None, min_apl_nbr: Optional[int] = None, order_by: Optional[str] = None, limit: Optional[int] = None):
@@ -88,6 +88,7 @@ def get_offers(type: Optional[OfferType] = None, min_apl_nbr: Optional[int] = No
         _offers = _offers[:limit]
     
     return _offers
+
 
 @app.get("/offers/{id}")
 def get_offer(*, id: int = Path(..., gt=0)) -> Offer:
@@ -135,3 +136,6 @@ def delete_offer(*, id: int = Path(..., gt=0)) -> Offer:
         return ofr
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Inexisting offers")
+        
+        
+"""

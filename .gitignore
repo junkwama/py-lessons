@@ -1,2 +1,3 @@
 *.mp4
-venv/
+Bibiane/
+**/__pycache__/

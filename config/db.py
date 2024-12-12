@@ -1,6 +1,5 @@
 from fastapi import Depends, HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorClient
-from pymongo.errors import ConnectionFailure
 
 async def get_db():
     
@@ -12,12 +11,14 @@ async def get_db():
         # Triyng to retrieving and yield (return) an updated version of the "bibiane" database
         yield client.bibiane
         
-    except ConnectionError:
+    except ConnectionError as e: # If any connection errors occurs
         
-        # If any connection errors occurs
+        print("Database connectoun Error:", str(e)) # Tell the api devs what happened
+        
+        # Send a general error mess to the client
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
-            description="The connection to DB failed"
+            detail="The connection to the DB failed"
         )
         
     finally:
