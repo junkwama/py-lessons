@@ -1,26 +1,16 @@
 from fastapi import APIRouter, Path, HTTPException, Depends, status
-from typing import Optional
-from pydantic import BaseModel, Field, validator
-from enum import Enum
-from functools import reduce
+import datetime
 
+# Local modules
 from config.db import get_db
-from routers.offers.offers_utils import serialize_offer
-
+from routers.offers.offers_utils import Offer, OfferPost
 
 offers_router = APIRouter()
 
-###
-
-available_agencies = [{"id": 1, "name": "BeRDC"}, {"id": 2, "name": "Best Travels"}]
-
-# First we have a list of diction for available offers
-initial_offers = [{"id": 1, "type": "études", "title": "Étudier au canada", "agency_id": 2, "apl_nbr": 3}]
-
+"""
 def get_offer_from_list(id):
     return list(filter(lambda _ofr: _ofr.id == id, offers))[0] if offers else null
 
-###
 
 class OfferType(Enum):
     study = "études"
@@ -52,9 +42,10 @@ class Offer(BaseOffer):
     def delete(self):
         global offers # To avoid confusion with the local var offers
         offers = list(filter(lambda ofr: ofr.id != self.id, offers))
+"""
 
-# We convert the existing offers from dictionaris to the Offer format we prepare with the Offer Modal above
-offers = [Offer(**ofr_dict) for ofr_dict in initial_offers]
+
+# print(ofr)
 
 
 @offers_router.get("")
@@ -63,6 +54,17 @@ async def get_offers(db = Depends(get_db)):
     offers = await offers_col.find().to_list()
     return [serialize_offer(ofr) for ofr in offers]
 
+@offers_router.post("")
+async def post_offer(ofr: OfferPost):
+    
+    # Check if the agency_id corrisponds to an existing agency
+    if not any(agc["id"] == b_ofr.agency_id for agc in available_agencies):
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Inexisting agency")
+    
+    
+    
+    print(ofr)
+    return None
 
 """
 
@@ -103,10 +105,7 @@ def get_offer(*, id: int = Path(..., gt=0)) -> Offer:
 @app.post("/offers")
 def post_offers(b_ofr: BaseOffer) -> Offer:
     
-    # Check if the agency_id corrisponds to an existing agency
-    if not any(agc["id"] == b_ofr.agency_id for agc in available_agencies):
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Inexisting agency")
-    
+
     # Creating a proper id to the new offer item
     # With 0 as initial value even if the list is empty we still have 0 + 1
     id = 1 + reduce(lambda cur_res, cur_item: cur_res if cur_res >= cur_item.id else cur_item.id, offers, 0)
@@ -136,6 +135,5 @@ def delete_offer(*, id: int = Path(..., gt=0)) -> Offer:
         return ofr
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Inexisting offers")
-        
-        
+
 """
