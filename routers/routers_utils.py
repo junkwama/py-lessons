@@ -1,7 +1,11 @@
 
-from fastapi import Response, status
-from pydantic import Field
+from fastapi import status
+from fastapi.responses import JSONResponse
 from typing import Optional, Any
+
+# local moduls
+from utils.utils import log
+
 
 HTTP_CODES = {
     200: status.HTTP_200_OK,
@@ -13,24 +17,27 @@ HTTP_CODES = {
     500: status.HTTP_500_INTERNAL_SERVER_ERROR
 }
 
-def send(responce_obj: Response, data, error_mess: Optional[str] = None, code: Optional[int] = Field(200), error_field: Optional[str] = None):
-    
+def send(
+    data: Optional[Any] = None, error_message: Optional[str] = None,
+    code: Optional[int] = 200, error_details: Optional[str] = None,
+    error_field: Optional[str] = None
+):
+
     content = {
         "code": code,
-        "data": data or None, 
+        "data": data, 
         "error": { 
-            "message": error_mess, 
-            "field": error_field 
-        } if (error_mess or error_field) else None
+            "message": error_message,
+            "details": error_details,
+            "field": error_field
+        } if (error_message or error_field or error_details) else None
     }
-
-    if code != 200:
-        responce_obj.status_code = HTTP_CODES[code]
     
-    return content
+    return JSONResponse(content, code)
 
-def send200(responce_obj: Response, data):
-    return send(responce_obj, data)
+def send200(data): 
+    return send(data)
 
-def send500(responce_obj: Response):
-    return send(responce_obj, None, "An error while processing your request", 500)
+def send500(e: Exception):
+    if e: log(e)
+    return send(error_message = "An error while processing your request", code = 500)
