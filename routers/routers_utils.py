@@ -6,7 +6,6 @@ from typing import Optional, Any
 # local moduls
 from utils.utils import log
 
-
 HTTP_CODES = {
     200: status.HTTP_200_OK,
     400: status.HTTP_400_BAD_REQUEST,
@@ -19,18 +18,19 @@ HTTP_CODES = {
 
 def send(
     data: Optional[Any] = None, error_message: Optional[str] = None,
-    code: Optional[int] = 200, error_details: Optional[str] = None,
-    error_field: Optional[str] = None
+    code: Optional[int] = 200, error_location: Optional[str] = None,
+    error_field: Optional[str] = None, error_type: Optional[str] = None
 ):
 
     content = {
         "code": code,
         "data": data, 
-        "error": { 
+        "error": {
+            "type": error_type,
             "message": error_message,
-            "details": error_details,
+            "location": error_location,
             "field": error_field
-        } if (error_message or error_field or error_details) else None
+        } if (error_type or error_message or error_field or error_location) else None
     }
     
     return JSONResponse(content, code)

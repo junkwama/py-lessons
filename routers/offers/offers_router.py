@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Path, HTTPException, Depends, status
 import datetime
+from bson import ObjectId
 
-# Local modules
+# local modules
 from config.db import get_db
-from routers.offers.offers_utils import Offer, OfferPost
+from routers.offers.offers_models import Offer, OfferBase
+from utils.utils import deserialize_id
+from routers.routers_utils import HTTP_CODES
 
 offers_router = APIRouter()
 
@@ -55,15 +58,26 @@ async def get_offers(db = Depends(get_db)):
     return [serialize_offer(ofr) for ofr in offers]
 
 @offers_router.post("")
-async def post_offer(ofr: OfferPost):
+async def post_offer(ofr: OfferBase, db = Depends(get_db)):
+    
+    agencies = db.agencies
+    offers = db.offers
     
     # Check if the agency_id corrisponds to an existing agency
-    if not any(agc["id"] == b_ofr.agency_id for agc in available_agencies):
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Inexisting agency")
+    agc = await agencies.find_one({"_id": deserialize_id(ofr.agency_id)})
+    print(agc)
+    if not agc:
+        raise HTTPException(HTTP_CODES[404])
+    new_ofr = {
+        **ofr.dict(),
+        "agency_id": agc["_id"],
+        "created_on": datetime.datetime.now(),
+        "last_updated_on": datetime.datetime.now(),
+        "applications": []
+    }
     
+    print(new_ofr)
     
-    
-    print(ofr)
     return None
 
 """
