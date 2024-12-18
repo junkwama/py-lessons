@@ -6,7 +6,7 @@ from bson import ObjectId
 from config.db import get_db
 from routers.offers.offers_models import Offer, OfferBase
 from utils.utils import deserialize_id
-from routers.routers_utils import HTTP_CODES
+from routers.routers_utils import HTTP_CODES, ErrorTypes, get_error_details
 
 offers_router = APIRouter()
 
@@ -65,9 +65,16 @@ async def post_offer(ofr: OfferBase, db = Depends(get_db)):
     
     # Check if the agency_id corrisponds to an existing agency
     agc = await agencies.find_one({"_id": deserialize_id(ofr.agency_id)})
-    print(agc)
     if not agc:
-        raise HTTPException(HTTP_CODES[404])
+        raise HTTPException(
+            HTTP_CODES[404], 
+            get_error_details(
+                ErrorTypes.not_found_error.name, ["body", "agency_id"], 
+                "Not Found, No matching agency", ofr.agency_id
+            )
+        )
+    
+    # Insert the new agency to the data base
     new_ofr = {
         **ofr.dict(),
         "agency_id": agc["_id"],
@@ -75,6 +82,9 @@ async def post_offer(ofr: OfferBase, db = Depends(get_db)):
         "last_updated_on": datetime.datetime.now(),
         "applications": []
     }
+    
+    # Next Step: Catch 422 and 404 errors with on exception_handler 
+    # And make sure then send back to the user a formated respons
     
     print(new_ofr)
     

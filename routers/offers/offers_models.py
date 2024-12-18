@@ -1,11 +1,17 @@
 # external libs
 from pydantic import BaseModel, Field, validator
 from typing import Optional
+from enum import Enum
 import datetime
 
 # local libs
-from utils.models import OfferType
 from utils.utils import is_valid_obj_id
+
+
+class OfferType(Enum):
+    studies = "studies"
+    immigration = "immigration"
+    tourism = "tourisme"
 
 class OfferBase(BaseModel):
     title: str = Field(..., min_length=2, max_length=256)

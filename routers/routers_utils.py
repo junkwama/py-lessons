@@ -2,10 +2,13 @@
 from fastapi import status
 from fastapi.responses import JSONResponse
 from typing import Optional, Any
+from enum import Enum
 
 # local moduls
 from utils.utils import log
 
+
+# Custom HTTP codes
 HTTP_CODES = {
     200: status.HTTP_200_OK,
     400: status.HTTP_400_BAD_REQUEST,
@@ -15,6 +18,26 @@ HTTP_CODES = {
     409: status.HTTP_409_CONFLICT,
     500: status.HTTP_500_INTERNAL_SERVER_ERROR
 }
+
+# Custom error types
+class ErrorTypes(Enum):
+    value_error = "Invalid value provided"
+    type_error = "Type mismatch error"
+    missing_error = "Required field is missing"
+    not_found_error = "Resource not found"
+    validation_error = "Validation failed"
+    permission_error = "Permission denied"
+    database_error = "Database access error"
+    timeout_error = "Request timeout"
+    authentication_error = "Authentication failed"
+    authorization_error = "Authorization failed"
+
+
+def get_error_details(
+    type: Optional[str] = None, loc: Optional[list] = None, 
+    msg: Optional[str] = None, input: Optional[Any] = None
+) -> dict: return { "type": type, "loc": loc, "msg": msg, "input": input }
+
 
 def send(
     data: Optional[Any] = None, error_message: Optional[str] = None,
