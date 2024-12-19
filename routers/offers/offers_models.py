@@ -21,6 +21,16 @@ class OfferBase(BaseModel):
     
     @validator("agency_id")
     def is_agency_id_valid(cls, v): return is_valid_obj_id(v)
+    
+    def insertable_dict(self):
+        this_ofr_dict = self.dict()
+        return {
+            **this_ofr_dict,
+            "type": str(this_ofr_dict["type"]),
+            "created_on": this_ofr_dict.get("created_on", datetime.datetime.now()),
+            "last_updated_on": this_ofr_dict.get("last_updated_on", datetime.datetime.now()),
+            "applications": this_ofr_dict.get("applications", [])
+        }
 
 
 class Offer(OfferBase):

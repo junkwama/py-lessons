@@ -6,7 +6,8 @@ from bson import ObjectId
 from config.db import get_db
 from routers.offers.offers_models import Offer, OfferBase
 from utils.utils import deserialize_id
-from routers.routers_utils import HTTP_CODES, ErrorTypes, get_error_details
+from routers.routers_utils import get_error_details, send200, send404
+from routers.router_constants import HTTP_CODES, ErrorTypes
 
 offers_router = APIRouter()
 
@@ -47,10 +48,6 @@ class Offer(BaseOffer):
         offers = list(filter(lambda ofr: ofr.id != self.id, offers))
 """
 
-
-# print(ofr)
-
-
 @offers_router.get("")
 async def get_offers(db = Depends(get_db)):
     offers_col = db.offers
@@ -59,36 +56,24 @@ async def get_offers(db = Depends(get_db)):
 
 @offers_router.post("")
 async def post_offer(ofr: OfferBase, db = Depends(get_db)):
-    
     agencies = db.agencies
     offers = db.offers
     
     # Check if the agency_id corrisponds to an existing agency
     agc = await agencies.find_one({"_id": deserialize_id(ofr.agency_id)})
     if not agc:
-        raise HTTPException(
-            HTTP_CODES[404], 
-            get_error_details(
-                ErrorTypes.not_found_error.name, ["body", "agency_id"], 
-                "Not Found, No matching agency", ofr.agency_id
-            )
-        )
+        return send404(["body", "agency_id"], "Not Found, No matching agency")
     
     # Insert the new agency to the data base
-    new_ofr = {
-        **ofr.dict(),
-        "agency_id": agc["_id"],
-        "created_on": datetime.datetime.now(),
-        "last_updated_on": datetime.datetime.now(),
-        "applications": []
-    }
-    
-    # Next Step: Catch 422 and 404 errors with on exception_handler 
-    # And make sure then send back to the user a formated respons
-    
-    print(new_ofr)
-    
-    return None
+    new_ofr = ofr.insertable_dict()
+    res = await offers.insert_one(new_ofr)
+    inserted_id = getattr(res, "inserted_id", None)
+    if not inserted_id:
+        raise HTTPException(HTTP_CODES[500]["code"])
+    return send200({
+        "inserted_id": str(res.inserted_id),
+        "created_on": str(new_ofr["created_on"])
+    })
 
 """
 
@@ -126,21 +111,6 @@ def get_offer(*, id: int = Path(..., gt=0)) -> Offer:
     # Otherwise we send the requested offer.
     return ofr
 
-@app.post("/offers")
-def post_offers(b_ofr: BaseOffer) -> Offer:
-    
-
-    # Creating a proper id to the new offer item
-    # With 0 as initial value even if the list is empty we still have 0 + 1
-    id = 1 + reduce(lambda cur_res, cur_item: cur_res if cur_res >= cur_item.id else cur_item.id, offers, 0)
-    
-    # We expand properties of the new BaseOffer and use them to create an new Offer
-    ofr = Offer(id=id, **b_ofr.dict())
-    
-    # Then we add it to the list 
-    offers.append(ofr)
-    
-    return ofr # return the offer with the right id to the user
 
 @app.put("/offers/{id}")
 def put_offer(*, id: int = Path(..., gt=0), updated_ofr: UpdateBaseOffer):

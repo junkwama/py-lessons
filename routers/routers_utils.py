@@ -1,37 +1,11 @@
-
+# External modules
 from fastapi import status
 from fastapi.responses import JSONResponse
 from typing import Optional, Any
-from enum import Enum
 
-# local moduls
+# Local modules
 from utils.utils import log
-
-
-# Custom HTTP codes
-HTTP_CODES = {
-    200: status.HTTP_200_OK,
-    400: status.HTTP_400_BAD_REQUEST,
-    401: status.HTTP_401_UNAUTHORIZED,
-    403: status.HTTP_403_FORBIDDEN,
-    404: status.HTTP_404_NOT_FOUND,
-    409: status.HTTP_409_CONFLICT,
-    500: status.HTTP_500_INTERNAL_SERVER_ERROR
-}
-
-# Custom error types
-class ErrorTypes(Enum):
-    value_error = "Invalid value provided"
-    type_error = "Type mismatch error"
-    missing_error = "Required field is missing"
-    not_found_error = "Resource not found"
-    validation_error = "Validation failed"
-    permission_error = "Permission denied"
-    database_error = "Database access error"
-    timeout_error = "Request timeout"
-    authentication_error = "Authentication failed"
-    authorization_error = "Authorization failed"
-
+from routers.router_constants import HTTP_CODES, ErrorTypes
 
 def get_error_details(
     type: Optional[str] = None, loc: Optional[list] = None, 
@@ -41,7 +15,7 @@ def get_error_details(
 
 def send(
     data: Optional[Any] = None, error_message: Optional[str] = None,
-    code: Optional[int] = 200, error_location: Optional[str] = None,
+    code: Optional[int] = HTTP_CODES[200]["code"], error_location: Optional[str] = None,
     error_field: Optional[str] = None, error_type: Optional[str] = None
 ):
 
@@ -61,6 +35,24 @@ def send(
 def send200(data): 
     return send(data)
 
+def send404(error_location: list, error_message: Optional[str] = None): 
+    return send(
+        error_message = error_message or HTTP_CODES[404]["message"],
+        error_type = ErrorTypes.not_found_error,
+        code = HTTP_CODES[404]["code"],
+        error_location = error_location,
+        error_field = error_location[-1]
+    )
+
+def send422(error_location: list, error_message: Optional[str] = None): 
+    return send(
+        error_message = error_message or HTTP_CODES[422]["message"],
+        error_type = ErrorTypes.validation_error.name,
+        code = HTTP_CODES[422]["code"], 
+        error_location = error_location,
+        error_field = error_location[-1]
+    )
+
 def send500(e: Exception):
     if e: log(e)
-    return send(error_message = "An error while processing your request", code = 500)
+    return send(error_message = HTTP_CODES[500]["message"], code = HTTP_CODES[500]["code"])
