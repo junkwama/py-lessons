@@ -50,17 +50,17 @@ class Offer(BaseOffer):
 
 @offers_router.get("")
 async def get_offers(db = Depends(get_db)):
-    offers_col = db.offers
-    offers = await offers_col.find().to_list()
-    return [serialize_offer(ofr) for ofr in offers]
+    _offers = db.offers
+    offers = await _offers.find().to_list()
+    return [Offer(**ofr) for ofr in offers]
 
 @offers_router.post("")
 async def post_offer(ofr: OfferBase, db = Depends(get_db)):
-    agencies = db.agencies
+    _agencies = db.agencies
     offers = db.offers
     
     # Check if the agency_id corrisponds to an existing agency
-    agc = await agencies.find_one({"_id": deserialize_id(ofr.agency_id)})
+    agc = await _agencies.find_one({"_id": deserialize_id(ofr.agency_id)})
     if not agc:
         return send404(["body", "agency_id"], "Not Found, No matching agency")
     
