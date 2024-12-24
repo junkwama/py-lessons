@@ -12,7 +12,6 @@ def get_error_details(
     msg: Optional[str] = None, input: Optional[Any] = None
 ) -> dict: return { "type": type, "loc": loc, "msg": msg, "input": input }
 
-
 def send(
     data: Optional[Any] = None, error_message: Optional[str] = None,
     code: Optional[int] = HTTP_CODES[200]["code"], error_location: Optional[str] = None,
@@ -21,7 +20,7 @@ def send(
 
     content = {
         "code": code,
-        "data": data, 
+        "data": data,
         "error": {
             "type": error_type,
             "message": error_message,

@@ -17,36 +17,27 @@ class OfferBase(BaseModel):
     title: str = Field(..., min_length=2, max_length=256)
     type: OfferType
     description: Optional[str] = Field(None, max_length=3000)
-    agency_id: str 
+    agency_id: ObjectId 
     
-    @validator("agency_id")
-    def is_agency_id_valid(cls, v): return is_valid_obj_id(v)
+    class Config:
+        arbitrary_types_allowed = True # Accept custom class as Pydentic props type
+        json_encoders = { # When serializing ObjectId instances, use str(obj)
+            ObjectId: str
+        }
     
-    def insertable_dict(self):
-        this_ofr_dict = self.dict()
+    def deserialize(self):
+        this = self.dict()
         return {
-            **this_ofr_dict,
-            "agency_id": ObjectId(this_ofr_dict["agency_id"]),
-            "type": this_ofr_dict["type"].name,
-            "created_on": this_ofr_dict.get("created_on", datetime.datetime.now()),
-            "last_updated_on": this_ofr_dict.get("last_updated_on", datetime.datetime.now()),
-            "applications": this_ofr_dict.get("applications", [])
+            **this,
+            "type": this["type"].name,
+            "created_on": this.get("created_on", datetime.datetime.now()),
+            "updated_on": this.get("updated_on", datetime.datetime.now()),
+            "applications": this.get("applications", [])
         }
 
 class Offer(OfferBase):
-    id: str
+    id: ObjectId = Field(alias="_id") # alias _id because from db, they are coming as _id
     created_on: datetime.datetime
-    last_updated_on: datetime.datetime
+    updated_on: datetime.datetime
     applications: list = Field([])
-    
-    def __init__(self, agency_id, _id: Optional[ObjectId] = None):
-        # Because fom MongoDB we are getting "agency_id" and "_id"(for Offrer's "id" prop) in ObjectID type
-        if  _id: self.id = str(_id) 
-        if not isinstance(agency_id, str): self.agency_id = str(agency_id)
-    
-    @validator("id")
-    def is_id_valid(cls, v): 
-        if not is_valid_obj_id(v):
-            raise ValueError("id string invalid as ObjectId")
-        return v
-    
+
