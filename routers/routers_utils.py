@@ -1,7 +1,9 @@
 # External modules
 from fastapi import status
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from typing import Optional, Any
+
 
 # Local modules
 from utils.utils import log
@@ -29,7 +31,11 @@ def send(
         } if (error_type or error_message or error_field or error_location) else None
     }
     
-    return JSONResponse(content, code)
+    return JSONResponse(jsonable_encoder(content, by_alias=False), code)
+    """ 
+        We use by_alias=False because we we need to conserve the field's name
+        Since we are using id instead db's _id that is the alias
+    """
 
 def send200(data): 
     return send(data)

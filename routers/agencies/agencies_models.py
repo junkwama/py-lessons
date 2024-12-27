@@ -1,15 +1,12 @@
-from pydantic import BaseModel, Field
+from pydantic import Field
 from bson import ObjectId
 import datetime
 
-class AgencyBase(BaseModel):
+# Local modules
+from utils.models import Base
+
+class AgencyBase(Base):
     name: str
-    
-    class Config:
-        arbitrary_types_allowed = True # Accept custom class as Pydantic props type
-        json_encoders = { # When serializing ObjectId instances, use str(obj)
-            ObjectId: str
-        }
     
     def deserialize(self):
         this = self.dict()
@@ -23,3 +20,4 @@ class Agency(AgencyBase):
     id: ObjectId = Field(alias="_id")
     created_on: datetime.datetime
     updated_on: datetime.datetime
+    
