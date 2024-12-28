@@ -9,7 +9,6 @@ from routers.routers_utils import send200, send500, send422
 from routers.offers.offers_router import offers_router
 from routers.agencies.agencies_router import agencies_router
 
-
 app = FastAPI()
 
 

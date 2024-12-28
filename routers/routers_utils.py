@@ -4,7 +4,6 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from typing import Optional, Any
 
-
 # Local modules
 from utils.utils import log
 from routers.router_constants import HTTP_CODES, ErrorTypes

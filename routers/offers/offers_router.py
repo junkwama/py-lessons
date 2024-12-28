@@ -48,22 +48,6 @@ class Offer(BaseOffer):
         offers = list(filter(lambda ofr: ofr.id != self.id, offers))
 """
 
-# f = {
-#     "_id": ObjectId("676916a829eec0cc8e9c6de1"),
-#     "title": "Etudier au Canada",
-#     "type": "studies",
-#     "description": "Nous vous accompagnons dans vos demarches pour realiser votre projet d'etudes au canada",
-#     "created_on": datetime.datetime.fromisoformat("2024-12-23T08:52:08.864Z"),
-#     "last_updated_on": datetime.datetime.fromisoformat("2024-12-23T08:52:08.864Z"),
-#     "applications": [],
-#     "agency_id": ObjectId("6761e26fd959a3aefa9b4452")
-# }
-
-
-# o = Offer(**f)
-
-# print(o)
-
 @offers_router.get("")
 async def get_offers(db = Depends(get_db)):
     _offers = db.offers

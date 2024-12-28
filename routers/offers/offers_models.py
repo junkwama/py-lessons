@@ -35,4 +35,5 @@ class Offer(OfferBase):
     created_on: datetime.datetime
     updated_on: datetime.datetime
     applications: list = Field([])
+    
 
