@@ -3,14 +3,24 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 
 # Local modules
-from routers.routers_utils import send200, send500, send422
+from routers.utils import send200, send500, send422
+from config.db import init_db, close_db
 
 # Routes 
-from routers.offers.offers_router import offers_router
-from routers.agencies.agencies_router import agencies_router
+from routers.offer.index import offers_router
+from routers.agency.index import agencies_router
 
 app = FastAPI()
 
+# with motor initialize db and link it to beanie
+@app.on_event("startup")
+async def on_startup():
+    await init_db()
+
+# close the connection on shutdown
+@app.on_event("shutdown")
+async def on_shutdown():
+    await close_db()
 
 # Exceptions reprocessed and formated bfr bein' sent to the client 
 # General 500 exceptions
