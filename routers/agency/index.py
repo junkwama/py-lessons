@@ -5,7 +5,7 @@ from bson import ObjectId
 from models.agency import Agency, AgencyBase
 from routers.utils import send200, send404, send422
 
-agencies_router = APIRouter()
+agencies_router = APIRouter() 
 
 @agencies_router.post("/")
 async def post_agency(agency_base: AgencyBase):
