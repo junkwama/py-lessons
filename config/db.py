@@ -3,10 +3,7 @@ from beanie import init_beanie
 
 # Local modules
 from routers.utils import send500
-
-from models.agency import Agency
-from models.offer import Offer
-from models.application import Application
+from models import Agency, Offer, Application
 
 db_client = None
 

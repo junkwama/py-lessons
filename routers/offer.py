@@ -3,8 +3,7 @@ from bson import ObjectId
 import datetime
 
 # local modules
-from models.offer import Offer
-from models.agency import Agency
+from models import Offer, Agency
 from routers.utils import get_error_details, send200, send404
 from routers.constants import HTTP_CODES, ErrorTypes
 

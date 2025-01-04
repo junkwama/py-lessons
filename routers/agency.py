@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query, Path
 from bson import ObjectId
 
 # local modules
-from models.agency import Agency, AgencyBase
+from models import Agency, AgencyBase
 from routers.utils import send200, send404, send422
 
 agencies_router = APIRouter() 
