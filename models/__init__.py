@@ -1,6 +1,6 @@
 # external modules
 from pydantic import Field, BaseModel
-from beanie import Document, BackLink, Link
+from beanie import Document, BackLink, Link, PydanticObjectId
 from typing import Optional, List
 from enum import Enum
 import datetime
@@ -14,28 +14,31 @@ class AgencyBase(BaseModel):
     name: str = Field(..., min_length=2, max_length=256)
 
 class Agency(AgencyBase, Document):
-    offers: Optional[List[Link["Offer"]]]
+    offers: List[BackLink["Offer"]] = Field(original_field="agency")
     created_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     updated_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     
     class Settings:
-        name = "agencies"
+        name = "agencies" # DB collection's name
+        max_nesting_depth = 1  # Only fetch linked objects's imediate keys
 
 class Application(Document):
-    offer: Optional[BackLink["Offer"]] = Field(original_field="applications")
+    offer: Link["Offer"]
     created_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     updated_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     
     class Settings:
         name = "applications"
         
-class Offer(Document):
+class OfferBase(BaseModel):
     title: str = Field(..., min_length=2, max_length=256)
     description: Optional[str] = Field(None, max_length=3000)
     type: OfferType
-    applications: Optional[List[Link["Application"]]]
-    agency: BackLink["Agency"] = Field(original_field="offers")
-
+    agency_id: PydanticObjectId
+    
+class Offer(OfferBase, Document):
+    applications: List[BackLink["Application"]] = Field(original_field="offer")
+    agency: Link["Agency"]
     created_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     updated_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
 

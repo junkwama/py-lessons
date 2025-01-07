@@ -1,6 +1,7 @@
 # External modules
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
+from pydantic import ValidationError
 
 # Local modules
 from routers.utils import send200, send500, send422
@@ -22,12 +23,6 @@ async def on_startup():
 async def on_shutdown():
     await close_db()
 
-# Exceptions reprocessed and formated bfr bein' sent to the client 
-# General 500 exceptions
-@app.exception_handler(Exception)
-def exc_handler_500(request: Request, e: Exception): # NB: even when we don't use request we must put it because he func expect it 
-    return send500(e)
-
 # 422 Pydantic check fails
 @app.exception_handler(RequestValidationError)
 def exc_handler_422(request: Request, e: RequestValidationError):
@@ -39,6 +34,14 @@ def exc_handler_422(request: Request, e: RequestValidationError):
         error_message = error["msg"]
     finally: 
         return send422(error_location, error_message)
+
+# Exceptions reprocessed and formated bfr bein' sent to the client 
+# General 500 exceptions
+@app.exception_handler(Exception)
+def exc_handler_500(request: Request, e: Exception): # NB: even when we don't use request we must put it because he func expect it 
+    if isinstance(e, (RequestValidationError, ValidationError)):
+        return exc_handler_422(request, e) # Delegate to 422 handler as Beanie may fail to throw the right errors
+    return send500(e)
 
 @app.get("/")
 def server_status():
