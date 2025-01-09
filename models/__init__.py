@@ -1,9 +1,12 @@
-# external modules
+# External moduls
 from pydantic import Field, BaseModel
 from beanie import Document, BackLink, Link, PydanticObjectId
 from typing import Optional, List
 from enum import Enum
 import datetime
+
+# Local moduls
+from models.utils import GeneralSettins
 
 class OfferType(Enum):
     studies = "studies"
@@ -18,16 +21,19 @@ class Agency(AgencyBase, Document):
     created_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     updated_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     
-    class Settings:
+    class Settings(GeneralSettins):
         name = "agencies" # DB collection's name
-        max_nesting_depth = 1  # Only fetch linked objects's imediate keys
 
-class Application(Document):
+class ApplicationBase (BaseModel):
+    #candidate_id: PydanticObjectId
+    offer_id: PydanticObjectId
+
+class Application(ApplicationBase, Document):
     offer: Link["Offer"]
     created_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     updated_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     
-    class Settings:
+    class Settings(GeneralSettins):
         name = "applications"
         
 class OfferBase(BaseModel):
@@ -42,6 +48,6 @@ class Offer(OfferBase, Document):
     created_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
     updated_on: datetime.datetime = Field(default_factory=datetime.datetime.now)
 
-    class Settings:
+    class Settings(GeneralSettins):
         name = "offers"
         

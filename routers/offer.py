@@ -1,12 +1,10 @@
-from fastapi import APIRouter, Path, HTTPException
-from bson import ObjectId
-import datetime
-from beanie import BackLink
+# External Moduls
+from fastapi import APIRouter, HTTPException
 
-# local modules
+# Local modules
 from models import Offer, OfferBase, Agency
-from routers.utils import get_error_details, send200, send404
-from routers.constants import HTTP_CODES, ErrorTypes
+from routers.utils import send200, send404
+from routers.constants import HTTP_CODES
 
 offers_router = APIRouter()
 
@@ -14,7 +12,7 @@ offers_router = APIRouter()
 async def get_offers():
     offers = await Offer.find(fetch_links=True).to_list()
     return send200(offers)
-
+    
 @offers_router.post("/")
 async def post_offer(offer_base: OfferBase):
     # Check if the agency_id corrisponds to an existing agency

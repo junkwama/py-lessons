@@ -10,6 +10,7 @@ from config.db import init_db, close_db
 # Routes 
 from routers.offer import offers_router
 from routers.agency import agencies_router
+from routers.applications import applicatlions_router
 
 app = FastAPI()
 
@@ -55,3 +56,4 @@ def server_status():
 # App routes
 app.include_router(offers_router, prefix="/offers", tags=["offers"])
 app.include_router(agencies_router, prefix="/agencies", tags=["agencies"])
+app.include_router(applicatlions_router, prefix="/applications", tags=["applications"])
