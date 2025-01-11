@@ -5,7 +5,7 @@ from enum import Enum
 from datetime import date
 
 from models.subs import Address, Contacts
-from models.utils import BaseDocument
+from models.utils import BaseDocument, GeneralSettins
 
 class Role(Enum):
     SUPERMANAGER = "SUPERMANAGER" # SUPER SYSTEM MANAGER
@@ -19,29 +19,59 @@ class Gender(Enum):
     WOMAN = "F"
 
 class UserBase(BaseModel):
-    firstname: str = Field(..., max_length=64, min_length=2, examples="Jean Marc", description="The user's firsname")
-    lastname: str = Field(..., max_length=64, min_length=2, examples="Mulamba", description="The user's lastname")
-    middlename: Optional[str] = Field(None,  max_length=64, min_length=2, examples="Matwiudi", description="The user's middlename")
-    gender: Gender = Field(..., examples="M", description="Gender of the user. 'F' or 'M' are accepted")
-    contacts: Optional[Contacts] = Field(None, description="Contact informations")
-    Address: Optional[Address] = Field(None, description="Address informations")
+    firstname: str = Field(..., max_length=64, min_length=2, examples=["Jean Marc"], description="The user's firsname")
+    lastname: str = Field(..., max_length=64, min_length=2, examples=["Mulamba"], description="The user's lastname")
+    middlename: Optional[str] = Field(None,  max_length=64, min_length=2, examples=["Matwiudi"], description="The user's middlename")
+    gender: Gender = Field(..., examples=["M"], description="Gender of the user. 'F' or 'M' are accepted")
     birthdate: Optional[date] = Field(
         None,
         description="The user's date of birth. Must be a valid date in the past.",
-        example="1990-01-01"
+        examples=["1990-01-01"]
     )
     email: Indexed(str, unique=True) =  Field(
         ..., 
         pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", 
-        example="jeanmarc@example.com", 
+        examples=["jeanmarc@example.com"], 
         description="Email address"
     )
     password: str = Field(
         ...,
-        pattern=r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$",
-        description="Password must be 8-64 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.",
-        example="P@ssw0rd123"
+        min_length=8,
+        max_length=64,
+        examples=["ag?1*nv67"],
+        description="Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character."
     )
+
+    @validator("password")
+    def validate_password(cls, value):
+        # Ensure at least one uppercase letter
+        if not any(char.isupper() for char in value):
+            raise ValueError("Password must contain at least one uppercase letter.")
+        # Ensure at least one lowercase letter
+        if not any(char.islower() for char in value):
+            raise ValueError("Password must contain at least one lowercase letter.")
+        # Ensure at least one digit
+        if not any(char.isdigit() for char in value):
+            raise ValueError("Password must contain at least one digit.")
+        # Ensure at least one special character
+        special_characters = "@$!%*?&"
+        if not any(char in special_characters for char in value):
+            raise ValueError(f"Password must contain at least one special character: {special_characters}")
+        return value
+    
+    class Settings(GeneralSettins):
+        name = "users"
     
 class User(UserBase, BaseDocument):
     role: Role
+    username: Indexed(str, unique=True) = Field(
+        None,
+        min_length=3,  # Minimum username length
+        max_length=30,  # Maximum username length
+        pattern=r"^[a-zA-Z0-9_.-]+$",  # Restricts to alphanumeric characters, underscores, periods, and hyphens
+        examples=["jean12_"],
+        description="A unique username consisting of 3 to 30 characters, allowing letters, numbers, underscores, periods, and hyphens."
+    )
+    contacts: Optional[Contacts] = Field(None, description="Contact informations")
+    address: Optional[Address] = Field(None, description="Address informations")
+    

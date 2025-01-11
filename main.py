@@ -11,6 +11,7 @@ from config.db import init_db, close_db
 from routers import offers_router
 from routers import agencies_router
 from routers import applicatlions_router
+from routers import users_router
 
 app = FastAPI()
 
@@ -57,3 +58,4 @@ def server_status():
 app.include_router(offers_router, prefix="/offers", tags=["offers"])
 app.include_router(agencies_router, prefix="/agencies", tags=["agencies"])
 app.include_router(applicatlions_router, prefix="/applications", tags=["applications"])
+app.include_router(users_router, prefix="/users", tags=["users"])

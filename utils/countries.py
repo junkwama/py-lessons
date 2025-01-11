@@ -1,194 +1,193 @@
-from enum import Enum
-
-class Countries(Enum):
-    AFG = {"iso": "AFG", "name": "Afghanistan"}
-    ALB = {"iso": "ALB", "name": "Albania"}
-    DZA = {"iso": "DZA", "name": "Algeria"}
-    AND = {"iso": "AND", "name": "Andorra"}
-    AGO = {"iso": "AGO", "name": "Angola"}
-    ATA = {"iso": "ATA", "name": "Antarctica"}
-    ATG = {"iso": "ATG", "name": "Antigua and Barbuda"}
-    ARG = {"iso": "ARG", "name": "Argentina"}
-    ARM = {"iso": "ARM", "name": "Armenia"}
-    AUS = {"iso": "AUS", "name": "Australia"}
-    AUT = {"iso": "AUT", "name": "Austria"}
-    AZE = {"iso": "AZE", "name": "Azerbaijan"}
-    BHS = {"iso": "BHS", "name": "Bahamas"}
-    BHR = {"iso": "BHR", "name": "Bahrain"}
-    BGD = {"iso": "BGD", "name": "Bangladesh"}
-    BRB = {"iso": "BRB", "name": "Barbados"}
-    BLR = {"iso": "BLR", "name": "Belarus"}
-    BEL = {"iso": "BEL", "name": "Belgium"}
-    BLZ = {"iso": "BLZ", "name": "Belize"}
-    BEN = {"iso": "BEN", "name": "Benin"}
-    BTN = {"iso": "BTN", "name": "Bhutan"}
-    BOL = {"iso": "BOL", "name": "Bolivia"}
-    BIH = {"iso": "BIH", "name": "Bosnia and Herzegovina"}
-    BWA = {"iso": "BWA", "name": "Botswana"}
-    BRA = {"iso": "BRA", "name": "Brazil"}
-    BRN = {"iso": "BRN", "name": "Brunei"}
-    BGR = {"iso": "BGR", "name": "Bulgaria"}
-    BFA = {"iso": "BFA", "name": "Burkina Faso"}
-    BDI = {"iso": "BDI", "name": "Burundi"}
-    CPV = {"iso": "CPV", "name": "Cabo Verde"}
-    KHM = {"iso": "KHM", "name": "Cambodia"}
-    CMR = {"iso": "CMR", "name": "Cameroon"}
-    CAN = {"iso": "CAN", "name": "Canada"}
-    CAF = {"iso": "CAF", "name": "Central African Republic"}
-    TCD = {"iso": "TCD", "name": "Chad"}
-    CHL = {"iso": "CHL", "name": "Chile"}
-    CHN = {"iso": "CHN", "name": "China"}
-    COL = {"iso": "COL", "name": "Colombia"}
-    COM = {"iso": "COM", "name": "Comoros"}
-    COG = {"iso": "COG", "name": "Congo"}
-    COD = {"iso": "COD", "name": "Congo (DRC)"}
-    CRI = {"iso": "CRI", "name": "Costa Rica"}
-    CIV = {"iso": "CIV", "name": "Côte d'Ivoire"}
-    HRV = {"iso": "HRV", "name": "Croatia"}
-    CUB = {"iso": "CUB", "name": "Cuba"}
-    CYP = {"iso": "CYP", "name": "Cyprus"}
-    CZE = {"iso": "CZE", "name": "Czechia"}
-    DNK = {"iso": "DNK", "name": "Denmark"}
-    DJI = {"iso": "DJI", "name": "Djibouti"}
-    DMA = {"iso": "DMA", "name": "Dominica"}
-    DOM = {"iso": "DOM", "name": "Dominican Republic"}
-    ECU = {"iso": "ECU", "name": "Ecuador"}
-    EGY = {"iso": "EGY", "name": "Egypt"}
-    SLV = {"iso": "SLV", "name": "El Salvador"}
-    GNQ = {"iso": "GNQ", "name": "Equatorial Guinea"}
-    ERI = {"iso": "ERI", "name": "Eritrea"}
-    EST = {"iso": "EST", "name": "Estonia"}
-    ETH = {"iso": "ETH", "name": "Ethiopia"}
-    FJI = {"iso": "FJI", "name": "Fiji"}
-    FIN = {"iso": "FIN", "name": "Finland"}
-    FRA = {"iso": "FRA", "name": "France"}
-    GAB = {"iso": "GAB", "name": "Gabon"}
-    GMB = {"iso": "GMB", "name": "Gambia"}
-    GEO = {"iso": "GEO", "name": "Georgia"}
-    DEU = {"iso": "DEU", "name": "Germany"}
-    GHA = {"iso": "GHA", "name": "Ghana"}
-    GRC = {"iso": "GRC", "name": "Greece"}
-    GRD = {"iso": "GRD", "name": "Grenada"}
-    GTG = {"iso": "GTM", "name": "Guatemala"}
-    GIN = {"iso": "GIN", "name": "Guinea"}
-    GNB = {"iso": "GNB", "name": "Guinea-Bissau"}
-    GUY = {"iso": "GUY", "name": "Guyana"}
-    HTI = {"iso": "HTI", "name": "Haiti"}
-    VAT = {"iso": "VAT", "name": "Holy See"}
-    HONd = {"iso": "HND", "name": "Honduras"}
-    HUN = {"iso": "HUN", "name": "Hungary"}
-    ISL = {"iso": "ISL", "name": "Iceland"}
-    IND = {"iso": "IND", "name": "India"}
-    IDN = {"iso": "IDN", "name": "Indonesia"}
-    IRN = {"iso": "IRN", "name": "Iran"}
-    IRQ = {"iso": "IRQ", "name": "Iraq"}
-    IRL = {"iso": "IRL", "name": "Ireland"}
-    ISR = {"iso": "ISR", "name": "Israel"}
-    ITA = {"iso": "ITA", "name": "Italy"}
-    JAM = {"iso": "JAM", "name": "Jamaica"}
-    JPN = {"iso": "JPN", "name": "Japan"}
-    JOR = {"iso": "JOR", "name": "Jordan"}
-    KAZ = {"iso": "KAZ", "name": "Kazakhstan"}
-    KEN = {"iso": "KEN", "name": "Kenya"}
-    KIR = {"iso": "KIR", "name": "Kiribati"}
-    PRK = {"iso": "PRK", "name": "North Korea"}
-    KOR = {"iso": "KOR", "name": "South Korea"}
-    KWT = {"iso": "KWT", "name": "Kuwait"}
-    KGZ = {"iso": "KGZ", "name": "Kyrgyzstan"}
-    LAO = {"iso": "LAO", "name": "Laos"}
-    LVA = {"iso": "LVA", "name": "Latvia"}
-    LBN = {"iso": "LBN", "name": "Lebanon"}
-    LSO = {"iso": "LSO", "name": "Lesotho"}
-    LBR = {"iso": "LBR", "name": "Liberia"}
-    LBY = {"iso": "LBY", "name": "Libya"}
-    LIE = {"iso": "LIE", "name": "Liechtenstein"}
-    LTU = {"iso": "LTU", "name": "Lithuania"}
-    LUX = {"iso": "LUX", "name": "Luxembourg"}
-    MDG = {"iso": "MDG", "name": "Madagascar"}
-    MWL = {"iso": "MWI", "name": "Malawi"}
-    MYS = {"iso": "MYS", "name": "Malaysia"}
-    MDV = {"iso": "MDV", "name": "Maldives"}
-    MLI = {"iso": "MLI", "name": "Mali"}
-    MLT = {"iso": "MLT", "name": "Malta"}
-    MUS = {"iso": "MUS", "name": "Mauritius"}
-    MAR = {"iso": "MAR", "name": "Mauritania"}
-    MEX = {"iso": "MEX", "name": "Mexico"}
-    MDA = {"iso": "MDA", "name": "Moldova"}
-    MCO = {"iso": "MCO", "name": "Monaco"}
-    MNG = {"iso": "MNG", "name": "Mongolia"}
-    MNE = {"iso": "MNE", "name": "Montenegro"}
-    MOZ = {"iso": "MOZ", "name": "Mozambique"}
-    MMR = {"iso": "MMR", "name": "Myanmar"}
-    NAM = {"iso": "NAM", "name": "Namibia"}
-    NRU = {"iso": "NRU", "name": "Nauru"}
-    NPL = {"iso": "NPL", "name": "Nepal"}
-    NLD = {"iso": "NLD", "name": "Netherlands"}
-    NZL = {"iso": "NZL", "name": "New Zealand"}
-    NIC = {"iso": "NIC", "name": "Nicaragua"}
-    NER = {"iso": "NER", "name": "Niger"}
-    NGA = {"iso": "NGA", "name": "Nigeria"}
-    MKD = {"iso": "MKD", "name": "North Macedonia"}
-    NOR = {"iso": "NOR", "name": "Norway"}
-    OMN = {"iso": "OMN", "name": "Oman"}
-    PAK = {"iso": "PAK", "name": "Pakistan"}
-    PLW = {"iso": "PLW", "name": "Palau"}
-    PSE = {"iso": "PSE", "name": "Palestine"}
-    PAN = {"iso": "PAN", "name": "Panama"}
-    PNG = {"iso": "PNG", "name": "Papua New Guinea"}
-    PRY = {"iso": "PRY", "name": "Paraguay"}
-    PER = {"iso": "PER", "name": "Peru"}
-    PHL = {"iso": "PHL", "name": "Philippines"}
-    POL = {"iso": "POL", "name": "Poland"}
-    PRT = {"iso": "PRT", "name": "Portugal"}
-    QAT = {"iso": "QAT", "name": "Qatar"}
-    ROU = {"iso": "ROU", "name": "Romania"}
-    RUS = {"iso": "RUS", "name": "Russia"}
-    RWA = {"iso": "RWA", "name": "Rwanda"}
-    KNA = {"iso": "KNA", "name": "Saint Kitts and Nevis"}
-    LCA = {"iso": "LCA", "name": "Saint Lucia"}
-    VCT = {"iso": "VCT", "name": "Saint Vincent and the Grenadines"}
-    WSM = {"iso": "WSM", "name": "Samoa"}
-    SMR = {"iso": "SMR", "name": "San Marino"}
-    STP = {"iso": "STP", "name": "Sao Tome and Principe"}
-    SAU = {"iso": "SAU", "name": "Saudi Arabia"}
-    SEN = {"iso": "SEN", "name": "Senegal"}
-    SRB = {"iso": "SRB", "name": "Serbia"}
-    SYC = {"iso": "SYC", "name": "Seychelles"}
-    SLE = {"iso": "SLE", "name": "Sierra Leone"}
-    SGP = {"iso": "SGP", "name": "Singapore"}
-    SVK = {"iso": "SVK", "name": "Slovakia"}
-    SVN = {"iso": "SVN", "name": "Slovenia"}
-    SLB = {"iso": "SLB", "name": "Solomon Islands"}
-    SOM = {"iso": "SOM", "name": "Somalia"}
-    ZAF = {"iso": "ZAF", "name": "South Africa"}
-    SSD = {"iso": "SSD", "name": "South Sudan"}
-    ESP = {"iso": "ESP", "name": "Spain"}
-    LKA = {"iso": "LKA", "name": "Sri Lanka"}
-    SDN = {"iso": "SDN", "name": "Sudan"}
-    SUR = {"iso": "SUR", "name": "Suriname"}
-    SWE = {"iso": "SWE", "name": "Sweden"}
-    CHE = {"iso": "CHE", "name": "Switzerland"}
-    SYR = {"iso": "SYR", "name": "Syria"}
-    TJK = {"iso": "TJK", "name": "Tajikistan"}
-    TZA = {"iso": "TZA", "name": "Tanzania"}
-    THA = {"iso": "THA", "name": "Thailand"}
-    TGO = {"iso": "TGO", "name": "Togo"}
-    TON = {"iso": "TON", "name": "Tonga"}
-    TTO = {"iso": "TTO", "name": "Trinidad and Tobago"}
-    TUN = {"iso": "TUN", "name": "Tunisia"}
-    TUR = {"iso": "TUR", "name": "Turkey"}
-    TKM = {"iso": "TKM", "name": "Turkmenistan"}
-    TUV = {"iso": "TUV", "name": "Tuvalu"}
-    UGA = {"iso": "UGA", "name": "Uganda"}
-    UKR = {"iso": "UKR", "name": "Ukraine"}
-    ARE = {"iso": "ARE", "name": "United Arab Emirates"}
-    GBR = {"iso": "GBR", "name": "United Kingdom"}
-    USA = {"iso": "USA", "name": "United States"}
-    URY = {"iso": "URY", "name": "Uruguay"}
-    UZB = {"iso": "UZB", "name": "Uzbekistan"}
-    VUT = {"iso": "VUT", "name": "Vanuatu"}
-    VEN = {"iso": "VEN", "name": "Venezuela"}
-    VNM = {"iso": "VNM", "name": "Vietnam"}
-    YEM = {"iso": "YEM", "name": "Yemen"}
-    ZMB = {"iso": "ZMB", "name": "Zambia"}
-    ZWE = {"iso": "ZWE", "name": "Zimbabwe"}
+COUNTRIES = {
+    "afg": {"iso": "AFG", "name": "Afghanistan"},
+    "alb": {"iso": "ALB", "name": "Albania"},
+    "dza": {"iso": "DZA", "name": "Algeria"},
+    "and": {"iso": "AND", "name": "Andorra"},
+    "ago": {"iso": "AGO", "name": "Angola"},
+    "ata": {"iso": "ATA", "name": "Antarctica"},
+    "atg": {"iso": "ATG", "name": "Antigua and Barbuda"},
+    "arg": {"iso": "ARG", "name": "Argentina"},
+    "arm": {"iso": "ARM", "name": "Armenia"},
+    "aus": {"iso": "AUS", "name": "Australia"},
+    "aut": {"iso": "AUT", "name": "Austria"},
+    "aze": {"iso": "AZE", "name": "Azerbaijan"},
+    "bhs": {"iso": "BHS", "name": "Bahamas"},
+    "bhr": {"iso": "BHR", "name": "Bahrain"},
+    "bgd": {"iso": "BGD", "name": "Bangladesh"},
+    "brb": {"iso": "BRB", "name": "Barbados"},
+    "blr": {"iso": "BLR", "name": "Belarus"},
+    "bel": {"iso": "BEL", "name": "Belgium"},
+    "blz": {"iso": "BLZ", "name": "Belize"},
+    "ben": {"iso": "BEN", "name": "Benin"},
+    "btn": {"iso": "BTN", "name": "Bhutan"},
+    "bol": {"iso": "BOL", "name": "Bolivia"},
+    "bih": {"iso": "BIH", "name": "Bosnia and Herzegovina"},
+    "bwa": {"iso": "BWA", "name": "Botswana"},
+    "bra": {"iso": "BRA", "name": "Brazil"},
+    "brn": {"iso": "BRN", "name": "Brunei"},
+    "bgr": {"iso": "BGR", "name": "Bulgaria"},
+    "bfa": {"iso": "BFA", "name": "Burkina Faso"},
+    "bdi": {"iso": "BDI", "name": "Burundi"},
+    "cpv": {"iso": "CPV", "name": "Cabo Verde"},
+    "khm": {"iso": "KHM", "name": "Cambodia"},
+    "cmr": {"iso": "CMR", "name": "Cameroon"},
+    "can": {"iso": "CAN", "name": "Canada"},
+    "caf": {"iso": "CAF", "name": "Central African Republic"},
+    "tcd": {"iso": "TCD", "name": "Chad"},
+    "chl": {"iso": "CHL", "name": "Chile"},
+    "chn": {"iso": "CHN", "name": "China"},
+    "col": {"iso": "COL", "name": "Colombia"},
+    "com": {"iso": "COM", "name": "Comoros"},
+    "cog": {"iso": "COG", "name": "Congo"},
+    "cod": {"iso": "COD", "name": "Congo (DRC)"},
+    "cri": {"iso": "CRI", "name": "Costa Rica"},
+    "civ": {"iso": "CIV", "name": "Côte d'Ivoire"},
+    "hrv": {"iso": "HRV", "name": "Croatia"},
+    "cub": {"iso": "CUB", "name": "Cuba"},
+    "cyp": {"iso": "CYP", "name": "Cyprus"},
+    "cze": {"iso": "CZE", "name": "Czechia"},
+    "dnk": {"iso": "DNK", "name": "Denmark"},
+    "dji": {"iso": "DJI", "name": "Djibouti"},
+    "dma": {"iso": "DMA", "name": "Dominica"},
+    "dom": {"iso": "DOM", "name": "Dominican Republic"},
+    "ecu": {"iso": "ECU", "name": "Ecuador"},
+    "egy": {"iso": "EGY", "name": "Egypt"},
+    "slv": {"iso": "SLV", "name": "El Salv,ador"},
+    "gnq": {"iso": "GNQ", "name": "Equator,ial Gu,inea"},
+    "eri": {"iso": "ERI", "name": "Eritrea,"},
+    "est": {"iso": "EST", "name": "Estonia,"},
+    "eth": {"iso": "ETH", "name": "Ethiopi,a"},
+    "fji": {"iso": "FJI", "name": "Fiji"},
+    "fin": {"iso": "FIN", "name": "Finland"},
+    "fra": {"iso": "FRA", "name": "France"},
+    "gab": {"iso": "GAB", "name": "Gabon"},
+    "gmb": {"iso": "GMB", "name": "Gambia"},
+    "geo": {"iso": "GEO", "name": "Georgia"},
+    "deu": {"iso": "DEU", "name": "Germany"},
+    "gha": {"iso": "GHA", "name": "Ghana"},
+    "grc": {"iso": "GRC", "name": "Greece"},
+    "grd": {"iso": "GRD", "name": "Grenada"},
+    "gtg": {"iso": "GTM", "name": "Guatemala"},
+    "gin": {"iso": "GIN", "name": "Guinea"},
+    "gnb": {"iso": "GNB", "name": "Guinea-Bissau,"},
+    "guy": {"iso": "GUY", "name": "Guyana"},
+    "hti": {"iso": "HTI", "name": "Haiti"},
+    "vat": {"iso": "VAT", "name": "Holy See"},
+    "hnd": {"iso": "HND", "name": "Honduras"},
+    "hun": {"iso": "HUN", "name": "Hungary"},
+    "isl": {"iso": "ISL", "name": "Iceland"},
+    "ind": {"iso": "IND", "name": "India"},
+    "idn": {"iso": "IDN", "name": "Indonesia"},
+    "irn": {"iso": "IRN", "name": "Iran"},
+    "irq": {"iso": "IRQ", "name": "Iraq"},
+    "irl": {"iso": "IRL", "name": "Ireland"},
+    "isr": {"iso": "ISR", "name": "Israel"},
+    "ita": {"iso": "ITA", "name": "Italy"},
+    "jam": {"iso": "JAM", "name": "Jamaica"},
+    "jpn": {"iso": "JPN", "name": "Japan"},
+    "jor": {"iso": "JOR", "name": "Jordan"},
+    "kaz": {"iso": "KAZ", "name": "Kazakhstan"},
+    "ken": {"iso": "KEN", "name": "Kenya"},
+    "kir": {"iso": "KIR", "name": "Kiribati"},
+    "prk": {"iso": "PRK", "name": "North Korea"},
+    "kor": {"iso": "KOR", "name": "South Korea"},
+    "kwt": {"iso": "KWT", "name": "Kuwait"},
+    "kgz": {"iso": "KGZ", "name": "Kyrgyzstan"},
+    "lao": {"iso": "LAO", "name": "Laos"},
+    "lva": {"iso": "LVA", "name": "Latvia"},
+    "lbn": {"iso": "LBN", "name": "Lebanon"},
+    "lso": {"iso": "LSO", "name": "Lesotho"},
+    "lbr": {"iso": "LBR", "name": "Liberia"},
+    "lby": {"iso": "LBY", "name": "Libya"},
+    "lie": {"iso": "LIE", "name": "Liechtenstein",},
+    "ltu": {"iso": "LTU", "name": "Lithuania"},
+    "lux": {"iso": "LUX", "name": "Luxembourg"},
+    "mdg": {"iso": "MDG", "name": "Madagascar"},
+    "mwl": {"iso": "MWI", "name": "Malawi"},
+    "mys": {"iso": "MYS", "name": "Malaysia"},
+    "mdv": {"iso": "MDV", "name": "Maldives"},
+    "mli": {"iso": "MLI", "name": "Mali"},
+    "mlt": {"iso": "MLT", "name": "Malta"},
+    "mus": {"iso": "MUS", "name": "Mauritius"},
+    "mar": {"iso": "MAR", "name": "Mauritania"},
+    "mex": {"iso": "MEX", "name": "Mexico"},
+    "mda": {"iso": "MDA", "name": "Moldova"},
+    "mco": {"iso": "MCO", "name": "Monaco"},
+    "mng": {"iso": "MNG", "name": "Mongolia"},
+    "mne": {"iso": "MNE", "name": "Montenegro"},
+    "moz": {"iso": "MOZ", "name": "Mozambique"},
+    "mmr": {"iso": "MMR", "name": "Myanmar"},
+    "nam": {"iso": "NAM", "name": "Namibia"},
+    "nru": {"iso": "NRU", "name": "Nauru"},
+    "npl": {"iso": "NPL", "name": "Nepal"},
+    "nld": {"iso": "NLD", "name": "Netherlands"},
+    "nzl": {"iso": "NZL", "name": "New Zealand"},
+    "nic": {"iso": "NIC", "name": "Nicaragua"},
+    "ner": {"iso": "NER", "name": "Niger"},
+    "nga": {"iso": "NGA", "name": "Nigeria"},
+    "mkd": {"iso": "MKD", "name": "North Macedoni,a"},
+    "nor": {"iso": "NOR", "name": "Norway"},
+    "omn": {"iso": "OMN", "name": "Oman"},
+    "pak": {"iso": "PAK", "name": "Pakistan"},
+    "plw": {"iso": "PLW", "name": "Palau"},
+    "pse": {"iso": "PSE", "name": "Palestine"},
+    "pan": {"iso": "PAN", "name": "Panama"},
+    "png": {"iso": "PNG", "name": "Papua New Guin,ea"},
+    "pry": {"iso": "PRY", "name": "Paraguay"},
+    "per": {"iso": "PER", "name": "Peru"},
+    "phl": {"iso": "PHL", "name": "Philippines"},
+    "pol": {"iso": "POL", "name": "Poland"},
+    "prt": {"iso": "PRT", "name": "Portugal"},
+    "qat": {"iso": "QAT", "name": "Qatar"},
+    "rou": {"iso": "ROU", "name": "Romania"},
+    "rus": {"iso": "RUS", "name": "Russia"},
+    "rwa": {"iso": "RWA", "name": "Rwanda"},
+    "kna": {"iso": "KNA", "name": "Saint Kitts and Nevis"},
+    "lca": {"iso": "LCA", "name": "Saint Lucia"},
+    "vct": {"iso": "VCT", "name": "Saint Vincent, and the Grenadines"},
+    "wsm": {"iso": "WSM", "name": "Samoa"},
+    "smr": {"iso": "SMR", "name": "San Marino"},
+    "stp": {"iso": "STP", "name": "Sao Tome and ,Principe"},
+    "sau": {"iso": "SAU", "name": "Saudi Arabia",},
+    "sen": {"iso": "SEN", "name": "Senegal"},
+    "srb": {"iso": "SRB", "name": "Serbia"},
+    "syc": {"iso": "SYC", "name": "Seychelles"},
+    "sle": {"iso": "SLE", "name": "Sierra Leone",},
+    "sgp": {"iso": "SGP", "name": "Singapore"},
+    "svk": {"iso": "SVK", "name": "Slovakia"},
+    "svn": {"iso": "SVN", "name": "Slovenia"},
+    "slb": {"iso": "SLB", "name": "Solomon Islan,ds"},
+    "som": {"iso": "SOM", "name": "Somalia"},
+    "zaf": {"iso": "ZAF", "name": "South Africa",},
+    "ssd": {"iso": "SSD", "name": "South Sudan"},
+    "esp": {"iso": "ESP", "name": "Spain"},
+    "lka": {"iso": "LKA", "name": "Sri Lanka"},
+    "sdn": {"iso": "SDN", "name": "Sudan"},
+    "sur": {"iso": "SUR", "name": "Suriname"},
+    "swe": {"iso": "SWE", "name": "Sweden"},
+    "che": {"iso": "CHE", "name": "Switzerland"},
+    "syr": {"iso": "SYR", "name": "Syria"},
+    "tjk": {"iso": "TJK", "name": "Tajikistan"},
+    "tza": {"iso": "TZA", "name": "Tanzania"},
+    "tha": {"iso": "THA", "name": "Thailand"},
+    "tgo": {"iso": "TGO", "name": "Togo"},
+    "ton": {"iso": "TON", "name": "Tonga"},
+    "tto": {"iso": "TTO", "name": "Trinidad and ,Tobago"},
+    "tun": {"iso": "TUN", "name": "Tunisia"},
+    "tur": {"iso": "TUR", "name": "Turkey"},
+    "tkm": {"iso": "TKM", "name": "Turkmenistan",},
+    "tuv": {"iso": "TUV", "name": "Tuvalu"},
+    "uga": {"iso": "UGA", "name": "Uganda"},
+    "ukr": {"iso": "UKR", "name": "Ukraine"},
+    "are": {"iso": "ARE", "name": "United Arab E,mirates"},
+    "gbr": {"iso": "GBR", "name": "United Kingdo,m"},
+    "usa": {"iso": "USA", "name": "United States,"},
+    "ury": {"iso": "URY", "name": "Uruguay"},
+    "uzb": {"iso": "UZB", "name": "Uzbekistan"},
+    "vut": {"iso": "VUT", "name": "Vanuatu"},
+    "ven": {"iso": "VEN", "name": "Venezuela"},
+    "vnm": {"iso": "VNM", "name": "Vietnam"},
+    "yem": {"iso": "YEM", "name": "Yemen"},
+    "zmb": {"iso": "ZMB", "name": "Zambia"},
+    "zwe": {"iso": "ZWE", "name": "Zimbabwe"}
+}
