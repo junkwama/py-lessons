@@ -3,7 +3,7 @@ from beanie import init_beanie
 
 # Local modules
 from routers.utils import send500
-from models import Agency, Offer, Application
+from models import Agency, Offer, Application, User
 
 db_client = None
 
@@ -13,7 +13,7 @@ async def init_db():
         try:
             db_client = AsyncIOMotorClient("mongodb://localhost:27017") # Establishing the connection to the server
             await init_beanie(database=db_client.bibiane, document_models=[
-                Agency, Offer, Application
+                Agency, Offer, Application, User
             ])
         except ConnectionError as e: # If any connection errors occurs
             return send500(e) # Send a general error mess to the client

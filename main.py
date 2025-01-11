@@ -8,9 +8,9 @@ from routers.utils import send200, send500, send422
 from config.db import init_db, close_db
 
 # Routes 
-from routers.offer import offers_router
-from routers.agency import agencies_router
-from routers.applications import applicatlions_router
+from routers import offers_router
+from routers import agencies_router
+from routers import applicatlions_router
 
 app = FastAPI()
 

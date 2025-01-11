@@ -11,8 +11,7 @@ applicatlions_router = APIRouter()
 @applicatlions_router.get("/")
 async def get_applications():
     applications = await Application.find(fetch_links=True).to_list()
-    print(applications)
-    #return send200(applications)
+    return send200(applications)
 
 @applicatlions_router.post("/")
 async def post_application(application_base: ApplicationBase):
