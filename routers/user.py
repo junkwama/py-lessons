@@ -16,7 +16,7 @@ async def get_users():
     
 @users_router.post("/")
 async def post_user(user_base: UserBase):
-    user = UserBase(**user_base.dict())
+    user = User(**user_base.dict())
     
     if not user.id:
         raise HTTPException(HTTP_CODES[500]["code"])

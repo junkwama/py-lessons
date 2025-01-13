@@ -23,7 +23,7 @@ def jsonable_parser(obj):
     elif isinstance(obj, BaseModel): return jsonable_parser(obj.dict())
     elif isinstance(obj, dict): return {key: jsonable_parser(value) for key, value in obj.items()}
     elif isinstance(obj, list): 
-        if all(isinstance(item, (BackLink, Link)) for item in obj): return None # Instead of returning a list of None, just return None
+        if all(isinstance(item, (BackLink, Link)) for item in obj)  and len(obj): return None # Instead of returning a list of None, just return None
         return [jsonable_parser(item) for item in obj]
     else: return jsonable_encoder(obj)
 
@@ -43,7 +43,7 @@ def send(
             "field": error_field
         } if (error_type or error_message or error_field or error_location) else None
     }
-
+    
     return JSONResponse(jsonable_parser(content), code)
 
 def send200(data): 

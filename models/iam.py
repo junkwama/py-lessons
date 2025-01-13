@@ -38,7 +38,7 @@ class UserBase(BaseModel):
         ...,
         min_length=8,
         max_length=64,
-        examples=["ag?1*nv67"],
+        examples=["Ag?1*nv67"],
         description="Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character."
     )
 
