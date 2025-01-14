@@ -6,7 +6,12 @@ from enum import Enum
 import datetime
 
 # Local moduls
+
+# CANNOT IMPORT FROM ITEMS TO AVOID CIRCULAR DEPS
 from models.utils import BaseDocument, GeneralSettins
+
+
+# PART 1: ITEMS
 
 class OfferType(Enum):
     studies = "studies"
@@ -18,16 +23,18 @@ class AgencyBase(BaseModel):
 
 class Agency(AgencyBase, BaseDocument):
     offers: List[BackLink["Offer"]] = Field(original_field="agency")
+    admins: List[BackLink["Admin"]] = Field(original_field="agency")
     
     class Settings(GeneralSettins):
         name = "agencies" # DB collection's name
 
 class ApplicationBase (BaseModel):
-    #candidate_id: PydanticObjectId
+    # candidate_id: PydanticObjectId
     offer_id: PydanticObjectId
 
 class Application(ApplicationBase, BaseDocument):
     offer: Link["Offer"]
+    candidate: Link["Candidate"]
     
     class Settings(GeneralSettins):
         name = "applications"
@@ -44,3 +51,18 @@ class Offer(OfferBase, BaseDocument):
 
     class Settings(GeneralSettins):
         name = "offers"
+        
+
+# PART 2: Candidate and Admins models put here to avoid circular dependancy
+
+class Admin(BaseDocument):
+    agency: Link["Agency"]
+    
+    class Settings(GeneralSettins):
+        name = "admins"
+        
+class Candidate(BaseDocument):
+    applications: List[BackLink["Application"]] = Field(original_field="candidate")
+    
+    class Settings(GeneralSettins):
+        name = "candidates"

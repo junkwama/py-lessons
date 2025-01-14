@@ -4,8 +4,7 @@ from typing import Optional
 from enum import Enum
 from datetime import date
 
-from models.iam.candidate import Candidate # From precised location instead of "from models" to avoil circular deps
-from models.iam.admin import Admin # From precised location instead of "from models" to avoil circular deps
+from models.items import Admin, Candidate
 from models.subs import Address, Contacts
 from models.utils import BaseDocument, GeneralSettins
 
