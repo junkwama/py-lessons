@@ -10,7 +10,6 @@ import datetime
 # CANNOT IMPORT FROM ITEMS TO AVOID CIRCULAR DEPS
 from models.utils import BaseDocument, GeneralSettins
 
-
 # PART 1: ITEMS
 
 class OfferType(Enum):
@@ -31,6 +30,7 @@ class Agency(AgencyBase, BaseDocument):
 class ApplicationBase (BaseModel):
     # candidate_id: PydanticObjectId
     offer_id: PydanticObjectId
+    candidate_id: PydanticObjectId
 
 class Application(ApplicationBase, BaseDocument):
     offer: Link["Offer"]
@@ -51,7 +51,6 @@ class Offer(OfferBase, BaseDocument):
 
     class Settings(GeneralSettins):
         name = "offers"
-        
 
 # PART 2: Candidate and Admins models put here to avoid circular dependancy
 

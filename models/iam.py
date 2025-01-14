@@ -66,7 +66,7 @@ class UserBase(BaseModel):
         name = "users"
     
 class User(UserBase, BaseDocument):
-    role: UserRole
+    role: UserRole = Field(UserRole.CANDIDATE.value) # for now we assume they're all candidates)
     username: Indexed(str, unique=True) = Field(
         None,
         min_length=3,  # Minimum username length
@@ -79,8 +79,8 @@ class User(UserBase, BaseDocument):
     address: Optional[Address] = Field(None, description="Address informations")
     
     # some candidate field
-    candiate: Optional[Link["Candidate"]]
-    admin: Optional[Link["Admin"]]
+    candidate: Optional[Link["Candidate"]] = Field(None)
+    admin: Optional[Link["Admin"]] = Field(None)
     
     def is_candidate():
         return 
