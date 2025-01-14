@@ -1,13 +1,15 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator, computed_field
 from beanie import PydanticObjectId, Link, Indexed
 from typing import Optional
 from enum import Enum
 from datetime import date
 
+from models.iam.candidate import Candidate # From precised location instead of "from models" to avoil circular deps
+from models.iam.admin import Admin # From precised location instead of "from models" to avoil circular deps
 from models.subs import Address, Contacts
 from models.utils import BaseDocument, GeneralSettins
 
-class Role(Enum):
+class UserRole(Enum):
     SUPERMANAGER = "SUPERMANAGER" # SUPER SYSTEM MANAGER
     MANAGER = "MANAGER" # SYSTEM ADMINS
     PARTNER = "PARTNER" # AGENCY PARTNER ADMINS
@@ -41,6 +43,8 @@ class UserBase(BaseModel):
         examples=["Ag?1*nv67"],
         description="Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character."
     )
+    
+    # candidate field
 
     @validator("password")
     def validate_password(cls, value):
@@ -63,7 +67,7 @@ class UserBase(BaseModel):
         name = "users"
     
 class User(UserBase, BaseDocument):
-    role: Role
+    role: UserRole
     username: Indexed(str, unique=True) = Field(
         None,
         min_length=3,  # Minimum username length
@@ -75,3 +79,9 @@ class User(UserBase, BaseDocument):
     contacts: Optional[Contacts] = Field(None, description="Contact informations")
     address: Optional[Address] = Field(None, description="Address informations")
     
+    # some candidate field
+    candiate: Optional[Link["Candidate"]]
+    admin: Optional[Link["Admin"]]
+    
+    def is_candidate():
+        return 
