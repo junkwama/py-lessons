@@ -67,6 +67,15 @@ def send422(error_location: list, error_message: Optional[str] = None):
         error_field = error_location[-1]
     )
 
+def send409(error_location: list, error_message: Optional[str] = None): 
+    return send(
+        error_message = error_message or HTTP_CODES[409]["message"],
+        error_type = ErrorTypes.database_error.name,
+        code = HTTP_CODES[409]["code"], 
+        error_location = error_location,
+        error_field = error_location[-1]
+    )
+
 def send500(e: Exception):
     if e: log(e)
     return send(error_message = HTTP_CODES[500]["message"], code = HTTP_CODES[500]["code"])

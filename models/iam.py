@@ -18,17 +18,8 @@ class UserRole(Enum):
 class Gender(Enum):
     MAN = "M"
     WOMAN = "F"
-
-class UserBase(BaseModel):
-    firstname: str = Field(..., max_length=64, min_length=2, examples=["Jean Marc"], description="The user's firsname")
-    lastname: str = Field(..., max_length=64, min_length=2, examples=["Mulamba"], description="The user's lastname")
-    middlename: Optional[str] = Field(None,  max_length=64, min_length=2, examples=["Matwiudi"], description="The user's middlename")
-    gender: Gender = Field(..., examples=["M"], description="Gender of the user. 'F' or 'M' are accepted")
-    birthdate: Optional[date] = Field(
-        None,
-        description="The user's date of birth. Must be a valid date in the past.",
-        examples=["1990-01-01"]
-    )
+    
+class UserAuth(BaseModel):
     email: Indexed(str, unique=True) =  Field(
         ..., 
         pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", 
@@ -43,8 +34,6 @@ class UserBase(BaseModel):
         description="Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character."
     )
     
-    # candidate field
-
     @validator("password")
     def validate_password(cls, value):
         # Ensure at least one uppercase letter
@@ -61,7 +50,18 @@ class UserBase(BaseModel):
         if not any(char in special_characters for char in value):
             raise ValueError(f"Password must contain at least one special character: {special_characters}")
         return value
-    
+
+class UserBase(UserAuth):
+    firstname: str = Field(..., max_length=64, min_length=2, examples=["Jean Marc"], description="The user's firsname")
+    lastname: str = Field(..., max_length=64, min_length=2, examples=["Mulamba"], description="The user's lastname")
+    middlename: Optional[str] = Field(None,  max_length=64, min_length=2, examples=["Matwiudi"], description="The user's middlename")
+    gender: Gender = Field(..., examples=["M"], description="Gender of the user. 'F' or 'M' are accepted")
+    birthdate: Optional[date] = Field(
+        None,
+        description="The user's date of birth. Must be a valid date in the past.",
+        examples=["1990-01-01"]
+    )
+
     class Settings(GeneralSettins):
         name = "users"
     
@@ -77,10 +77,10 @@ class User(UserBase, BaseDocument):
     )
     contacts: Optional[Contacts] = Field(None, description="Contact informations")
     address: Optional[Address] = Field(None, description="Address informations")
-    
+
     # some candidate field
     candidate: Optional[Link["Candidate"]] = Field(None)
     admin: Optional[Link["Admin"]] = Field(None)
-    
+
     def is_candidate():
         return 

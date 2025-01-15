@@ -2,16 +2,17 @@
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from pydantic import ValidationError
+from pymongo.errors import DuplicateKeyError
 
 # Local modules
-from routers.utils import send200, send500, send422
+from routers.utils import send200, send500, send422, send409
 from config.db import init_db, close_db
 
 # Routes 
-from routers import offers_router
-from routers import agencies_router
-from routers import applicatlions_router
-from routers import users_router
+from routers import (
+    auth_router, offers_router, agencies_router, applicatlions_router, 
+    users_router
+)
 
 app = FastAPI()
 
@@ -24,6 +25,13 @@ async def on_startup():
 @app.on_event("shutdown")
 async def on_shutdown():
     await close_db()
+    
+# 409 DB Unique Key Duplication Error
+@app.exception_handler(DuplicateKeyError)
+def exc_handler_422(request: Request, e: DuplicateKeyError):
+    errKey, errValue = list(e._OperationFailure__details["keyValue"].items())[0] # get the 1st conflict key
+    loc = "path" if errKey in request.path_params else "query" if errKey in request.query_params else "body"
+    return send409([loc, errKey], f"'{errValue}' as '{errKey}' is already used.")
 
 # 422 Pydantic check fails
 @app.exception_handler(RequestValidationError)
@@ -55,6 +63,7 @@ def server_status():
     })
 
 # App routes
+app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(offers_router, prefix="/offers", tags=["offers"])
 app.include_router(agencies_router, prefix="/agencies", tags=["agencies"])
 app.include_router(applicatlions_router, prefix="/applications", tags=["applications"])

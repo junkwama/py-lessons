@@ -14,15 +14,14 @@ async def get_users():
     users = await users.to_list()
     return send200(users)
 
-@users_router.post("/")
+@users_router.post("/register")
 async def post_user(user_base: UserBase):
     
     user = User(**user_base.dict())
     
     # Decide if it's a candidate or a admin
     # Until we implement Auth we only support candidate creation
-    candidate = Candidate()
-    user.candiate = candidate
+    user.candidate = Candidate()
     
     # Insert the new user with link_rule to write for any subs Docs like ()
     user = await user.insert(link_rule=WriteRules.WRITE)
