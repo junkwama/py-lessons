@@ -15,6 +15,7 @@ def get_error_details(
     msg: Optional[str] = None, input: Optional[Any] = None
 ) -> dict: return {"type": type, "loc": loc, "msg": msg, "input": input}
 
+
 # This function recursively search and parses everything. 
 # Since the classic jsonable_encoder doesn't support things BackLinks, ..ect
 def jsonable_parser(obj): 

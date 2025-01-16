@@ -14,9 +14,9 @@ async def get_users():
     users = await users.to_list()
     return send200(users)
 
-@users_router.post("/register")
-async def post_user(user_base: UserBase):
-    
+# This function is put here because it is related to the user entity 
+# But is used in "/auth/register" route
+async def create_user(user_base: UserBase):
     user = User(**user_base.dict())
     
     # Decide if it's a candidate or a admin
@@ -24,6 +24,7 @@ async def post_user(user_base: UserBase):
     user.candidate = Candidate()
     
     # Insert the new user with link_rule to write for any subs Docs like ()
+    user.hash_password() # hash the password bfr insert the user to db
     user = await user.insert(link_rule=WriteRules.WRITE)
     
     if not user.id:

@@ -1,3 +1,4 @@
 *.mp4
 Bibiane/
 **/__pycache__/
+.env

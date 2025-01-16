@@ -7,6 +7,7 @@ from pymongo.errors import DuplicateKeyError
 # Local modules
 from routers.utils import send200, send500, send422, send409
 from config.db import init_db, close_db
+from utils.utils import generate_token
 
 # Routes 
 from routers import (
@@ -14,7 +15,7 @@ from routers import (
     users_router
 )
 
-app = FastAPI()
+app = FastAPI() # The app's fastweb instance
 
 # with motor initialize db and link it to beanie
 @app.on_event("startup")

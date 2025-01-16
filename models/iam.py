@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, validator, computed_field
 from beanie import PydanticObjectId, Link, Indexed
+from passlib.context import CryptContext
 from typing import Optional
 from enum import Enum
 from datetime import date
@@ -7,6 +8,8 @@ from datetime import date
 from models.items import Admin, Candidate
 from models.subs import Address, Contacts
 from models.utils import BaseDocument, GeneralSettins
+
+password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class UserRole(Enum):
     SUPERMANAGER = "SUPERMANAGER" # SUPER SYSTEM MANAGER
@@ -34,6 +37,12 @@ class UserAuth(BaseModel):
         description="Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character."
     )
     
+    def hash_password(self):
+        self.password = password_context.hash(self.password)
+        
+    def does_password_match(self, password):
+        return password_context.verify(password, self.password)
+        
     @validator("password")
     def validate_password(cls, value):
         # Ensure at least one uppercase letter
