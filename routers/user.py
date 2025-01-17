@@ -31,5 +31,9 @@ async def create_user(user_base: UserBase):
         raise HTTPException(HTTP_CODES[500]["code"])
     return send200({
         "inserted_id": str(user.id),
-        "created_on": str(user.created_on)
+        "created_on": str(user.created_on),
+        "token": {
+            "data": user.get_token(),
+            "type": "bearer"
+        }
     })

@@ -50,6 +50,15 @@ def send(
 def send200(data): 
     return send(data)
 
+def send400(error_location: Optional[list], error_message: Optional[str] = None): 
+    return send(
+        error_message = error_message or HTTP_CODES[400]["message"],
+        error_type = ErrorTypes.authentication_error.name,
+        code = HTTP_CODES[400]["code"], 
+        error_location = error_location,
+        error_field = error_location[-1] if error_location and len(error_location) else None
+    )
+
 def send404(error_location: list, error_message: Optional[str] = None): 
     return send(
         error_message = error_message or HTTP_CODES[404]["message"],

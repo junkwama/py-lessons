@@ -1,13 +1,16 @@
+import jwt
 from pydantic import BaseModel, Field, validator, computed_field
 from beanie import PydanticObjectId, Link, Indexed
 from passlib.context import CryptContext
 from typing import Optional
 from enum import Enum
-from datetime import date
+from datetime import date, datetime
 
 from models.items import Admin, Candidate
 from models.subs import Address, Contacts
 from models.utils import BaseDocument, GeneralSettins
+from utils.utils import get_token_exp
+from config.config import Config, Env
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -40,7 +43,7 @@ class UserAuth(BaseModel):
     def hash_password(self):
         self.password = password_context.hash(self.password)
         
-    def does_password_match(self, password):
+    def check_password(self, password):
         return password_context.verify(password, self.password)
         
     @validator("password")
@@ -76,7 +79,7 @@ class UserBase(UserAuth):
     
 class User(UserBase, BaseDocument):
     role: UserRole = Field(UserRole.CANDIDATE.value) # for now we assume they're all candidates)
-    username: Indexed(str, unique=True) = Field(
+    username: Optional[Indexed(str, unique=True)] = Field(
         None,
         min_length=3,  # Minimum username length
         max_length=30,  # Maximum username length
@@ -90,6 +93,24 @@ class User(UserBase, BaseDocument):
     # some candidate field
     candidate: Optional[Link["Candidate"]] = Field(None)
     admin: Optional[Link["Admin"]] = Field(None)
-
-    def is_candidate():
-        return 
+        
+    def get_token(self, exp: Optional[datetime] = None):
+        """ Generate a JWT access token with a payload and expiry. """
+        
+        payload = {
+            "id": str(self.id),
+            "exp": exp or get_token_exp(),
+            "role": {
+                "title": self.role.value,
+                "candidate" : None if (self.role != UserRole.CANDIDATE) else {
+                    "id": str(self.candidate.id)
+                },
+                "admin":  None if (self.role == UserRole.CANDIDATE) else {
+                    "id": str(self.admin.id)
+                }      
+            }
+        }
+        
+        key = Env.BIBIANE_TOKEN_KEY.value
+        algorithm = Config.TOKEN_ALGORITHM.value
+        return jwt.encode(payload, key, algorithm)
